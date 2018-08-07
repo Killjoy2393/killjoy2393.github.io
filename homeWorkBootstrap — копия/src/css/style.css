@@ -1,0 +1,38 @@
+body{
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+.header{
+	font-size: 20px;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+
+
+.row{
+	text-align: center;
+	margin-top: 100px;
+}
+
+p{
+	font-size: 18px;
+}
+
+.cause{
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+}
+
+.three{
+	margin-top: 14.2px;
+}
+
+.five{
+	margin-top: 7px;
+}
