@@ -1,0 +1,72 @@
+body{
+	font-family: Tahoma, sans-serif
+}
+
+.header-top span{
+	display: block;
+	font-size: 24px;
+	line-height: 1.5;
+	margin-top: 3%;
+}
+
+strong{
+	font-size: 24px;
+	font-weight: 900;
+}
+
+.second-box, .third-box{
+	margin-top: 5%;
+}
+
+.mail{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.form{
+	border: 5px solid #2727d9;
+	padding: 35px 20px;
+}
+
+input{
+	margin-top: 20px;
+}
+
+button{
+	margin-top: 35px;
+}
+
+.header-mid{
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 1%;
+}
+.text-center p{
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: 3%;
+}
+
+.text-center{
+	margin-top: 3%;
+}
+
+.our-clients p{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.photo img{
+	width:	
+	height: 100%;
+}
+
+.photo-box{
+	width: 215px
+	height: 215px;
+	margin-top: 4%;
+}
+
+.bottom-col{
+	height: 10%;
+}
