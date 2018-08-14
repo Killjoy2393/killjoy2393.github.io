@@ -214,6 +214,7 @@ input{
 li{
 	list-style: none;
 	padding: 25px;
+	padding-left: 0px;
 }
 
 li a{
