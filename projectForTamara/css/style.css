@@ -403,8 +403,7 @@ h1{
 
  .choiser{
   background-image: url(../img/bg-3.png);
-  background-size: contain;
-  background-repeat: no-repe
+ 
 }
 
   .steps{
@@ -462,6 +461,7 @@ h1{
 
 .ask p{
   background-color: #f3f4f8;
+  padding-left: 1%;
 }
 
 .step_2{
@@ -470,9 +470,10 @@ h1{
     margin: 1% auto 4% auto;
     border: 1px solid #fed900;
     border-radius: 4px;
-    display: none;
-    
+    color: #000000;
+    display: none;  
 }
+
 
 .step_3{
     width: 30%;
@@ -481,6 +482,7 @@ h1{
     border: 1px solid #fed900;
     border-radius: 4px;
     display: none;
+    color: #000000;
 }
 
 .loader{
@@ -490,12 +492,12 @@ h1{
   display: -o-flex;
   display: flex;
   justify-content: center;
-  margin-top: 15%;
+  margin-top: 17%;
 }
 
 .wait{
   text-align: center;
-  margin-top: 10%;
+  margin-top: 13%;
   margin-bottom: 10%;
 }
 
@@ -506,6 +508,7 @@ h1{
     border: 1px solid #fed900;
     border-radius: 4px;
     display: none;
+    color: #000000;
 }
 
 .header_step_4 p{
@@ -529,6 +532,15 @@ h1{
   width: 50%;
   border-radius: 3px;
   margin-top: 10%;
+}
+
+.name p{
+  font-size: 1rem;
+}
+
+.box{
+  background-image: url(../img/bg-3.png);
+  margin-top: -0.2%;
 }
 
 
@@ -579,6 +591,15 @@ h1{
   .step_1{
     width: 50%;
   }
+   .step_2{
+    width: 50%;
+  }
+   .step_3{
+    width: 50%;
+  }
+   .step_4{
+    width: 50%;
+  }
 
   .time button{
    margin-left: 
@@ -586,9 +607,6 @@ h1{
   }
 }
 
-@media screen and (max-width:740px){
-  
-}
 
 @media screen and (max-width:540px){
   .contact{
@@ -631,6 +649,15 @@ h1{
     margin: 0;
   }
   .step_1{
+    width: 90%;
+  }
+   .step_2{
+    width: 90%;
+  }
+   .step_3{
+    width: 90%;
+  }
+   .step_4{
     width: 90%;
   }
   .time button{

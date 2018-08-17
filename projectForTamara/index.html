@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="js/main.js"></script>
+ 
   <title>Document</title>
 </head>
 <body>
@@ -204,7 +205,7 @@
       <div class="col-lg-12 steps">
         <h2 class="text-center">ВЫБИРАЙТЕ ИНВЕРТОР ПОД СВОИ ЗАДАЧИ</h2>
         <p class="text-center">Мы дадим Вам идеальную модель споттера конкретно под Ваши задачи.</p> 
-        <div class="step_1 curry" id="stp">
+        <div class="step_1">
           <div class="header_step">
           <p class="text-center"><b>Шаг 1.</b> Класс оборудования</p>
           </div>
@@ -214,16 +215,16 @@
             <p><input class="chckbx" type="checkbox">&#8195; <span>полупрофессиональные</span></p>
             <p><input class="chckbx" type="checkbox">&#8195;<span>профессиональные</span></p>
             <p><input class="chckbx" type="checkbox">&#8195;<span>не имеет значения</span></p>
-            <div class="next_btn text-center">
-            <button class="next">СЛЕДУЮЩИЙ ВОПРОС</button>
-            </div>
           </form>
+          <div class="next_btn text-center">
+            <button class="next" id="nxt">СЛЕДУЮЩИЙ ВОПРОС</button>
+            </div>
           </div>
         </div>
 </div>
 </div>
 </div>
-
+<div class="row box">
         <div class="step_2" id="stp_2">
           <div class="header_step">
           <p class="text-center"><b>Шаг 2.</b>  Напряжение питания</p>
@@ -235,14 +236,16 @@
             <p><input class="chckbx" type="checkbox">&#8195;<span>для автосервиса</span></p>
             <p><input class="chckbx" type="checkbox">&#8195;<span>для плазменной резки</span></p>
             <p><input class="chckbx" type="checkbox">&#8195;<span>другое</span></p>
+            </form>
             <div class="next_btn text-center">
-              <button>Назад</button>
-            <button class="next">Далее</button>
+              <button class="back">Назад</button>
+            <button class="next_2">Далее</button>
             </div>
-          </form>
+          
           </div>
         </div>
-
+</div>
+       <div class="row box"> 
         <div class="step_3">
           <div class="header_step">
           <p class="text-center"> Спасибо за уделенное время!</p>
@@ -254,7 +257,9 @@
             <p>Мы уже подбираем<br>для вас аппарат.</p>
           </div>
         </div>
+</div>
 
+<div class="row box">
         <div class="step_4">
           <div class="header_step_4">
           <p class="text-center">Данные будут отправлены на обработку</p>
@@ -274,7 +279,7 @@
           </div>
         </div>
     
-  
+  </div>
   
    <div class="container">
      <div class="row test">
