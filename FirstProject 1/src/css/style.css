@@ -1,5 +1,9 @@
 body{
-	font-family: Tahoma, sans-serif
+	font-family: Tahoma, sans-serif;
+	background-image: linear-gradient(rgba(255, 255, 10, 0.3), rgba(255, 255, 20, 0.4)), url(../img/bg-img.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+
 }
 
 .header-top span{
@@ -24,8 +28,12 @@ strong{
 }
 
 .form{
-	border: 5px solid #2727d9;
+	border: 5px solid black;
 	padding: 35px 20px;
+}
+
+.video {
+	margin-bottom: 40px;
 }
 
 input{
@@ -34,6 +42,7 @@ input{
 
 button{
 	margin-top: 35px;
+	background-color: black;
 }
 
 .header-mid{
@@ -59,6 +68,7 @@ button{
 .photo img{
 	width:	
 	height: 100%;
+	border-radius: 3px;
 }
 
 .photo-box{
@@ -69,4 +79,13 @@ button{
 
 .bottom-col{
 	height: 10%;
+}
+
+.photo-box img {
+	border: 5px solid black;
+}
+
+.photo-box img:hover {
+	border: none;
+	padding: 5px;
 }
