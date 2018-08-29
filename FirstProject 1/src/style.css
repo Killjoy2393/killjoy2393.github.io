@@ -1,0 +1,91 @@
+body{
+	font-family: Tahoma, sans-serif;
+	background-image: linear-gradient(rgba(255, 255, 10, 0.3), rgba(255, 255, 20, 0.4)), url(../img/bg-img.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+
+}
+
+.header-top span{
+	display: block;
+	font-size: 24px;
+	line-height: 1.5;
+	margin-top: 3%;
+}
+
+strong{
+	font-size: 24px;
+	font-weight: 900;
+}
+
+.second-box, .third-box{
+	margin-top: 5%;
+}
+
+.mail{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.form{
+	border: 5px solid black;
+	padding: 35px 20px;
+}
+
+.video {
+	margin-bottom: 40px;
+}
+
+input{
+	margin-top: 20px;
+}
+
+button{
+	margin-top: 35px;
+	background-color: black;
+}
+
+.header-mid{
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 1%;
+}
+.text-center p{
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: 3%;
+}
+
+.text-center{
+	margin-top: 3%;
+}
+
+.our-clients p{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.photo img{
+	width:	
+	height: 100%;
+	border-radius: 3px;
+}
+
+.photo-box{
+	width: 215px
+	height: 215px;
+	margin-top: 4%;
+}
+
+.bottom-col{
+	height: 10%;
+}
+
+.photo-box img {
+	border: 5px solid black;
+}
+
+.photo-box img:hover {
+	border: none;
+	padding: 5px;
+}
