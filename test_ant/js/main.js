@@ -2,7 +2,7 @@ btn.onclick = function addcomm() {
   var div2 = document.createElement('div');
   var div = document.createElement('div');
   var text1 = document.getElementById('mail').value;
-  if (mail.value != "") {  
+  if (mail.value > '0') {  
   div.className = "comment";
   div.innerHTML = (text1);
   comments.insertBefore(div, comments.firstChild);
