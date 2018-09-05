@@ -18,7 +18,7 @@ h1 span{color:#a8a8a8;font-size:12px;font-weight:300}
 .stat_3-indic{width:35px;background-color:#91e3f9;border-bottom-right-radius:5px;border-top-right-radius:5px;border-left:2px solid #5eb5cc}
 .number{margin-right:25px}
 .amount{width:570px;display:-webkit-flex;display:-moz-flex;display:-ms-flex;display:-o-flex;display:flex;justify-content:space-between;font-size:16px;font-weight:700}
-.wraper{display:-webkit-flex;display:-moz-flex;display:-ms-flex;display:-o-flex;display:flex;justify-content:space-between}
+.wraper{display:-webkit-flex;display:-moz-flex;display:-ms-flex;display:-o-flex;display:flex;justify-content:space-between; flex-wrap: wrap;}
 .item_1{display:-webkit-flex;display:-moz-flex;display:-ms-flex;display:-o-flex;display:flex;justify-content:space-between;width:250px}
 .last{font-size:16px;font-weight:700}
 .item_2{padding:16px 0}
@@ -37,3 +37,5 @@ textarea{width:calc(100% - 60px);padding:10px;margin:30px auto;display:inline;bo
 .btn{width:80%}
 .logo{width:140px;height:140px;border-radius:50%;overflow:hidden;position:absolute;top:25px}
 }
+@media screen and (max-width:370px){.item_2 {margin: auto;}}
+
