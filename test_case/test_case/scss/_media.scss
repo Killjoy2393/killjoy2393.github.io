@@ -1,0 +1,62 @@
+@media (max-width: 768px) {
+
+  .main {
+    padding: 15px;
+
+    &-left {
+      display: block;
+      width: 25%;
+      margin-bottom: 2.5%;
+    }
+
+    &-center {
+      width: 70%;
+      float: right;
+      margin-top: -33.4%;
+      text-align: left;
+
+      img {
+        width: 30%;
+      }
+    }
+
+    &-right {
+      display: block;
+      width: 25%;
+
+    }
+  }
+}
+
+
+@media (max-width: 350px) {
+  .main {
+    padding: 10px;
+    position: relative;
+
+    &-left {
+      width: 93%;
+      margin-bottom: 2.5%;
+      display: block;
+      position: absolute;
+      bottom: -39%;
+    }
+
+    &-center {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin-top: 0;
+
+      img {
+        width: 45%;
+      }
+    }
+
+    &-right {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+} 

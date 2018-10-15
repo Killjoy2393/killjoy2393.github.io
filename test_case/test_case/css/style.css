@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box; }
+
+img {
+  max-width: 100%;
+  vertical-align: top;
+  margin-bottom: 4%; }
+
+body {
+  padding: 0;
+  margin: 0; }
+
+.header {
+  height: 60px;
+  width: 100%;
+  background-color: #7CA4D9; }
+
+.main {
+  padding: 30px;
+  text-align: center;
+  max-width: 100%; }
+  .main-left {
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 1%;
+    width: 17%; }
+    .main-left img {
+      width: 100%; }
+  .main-center {
+    text-align: center;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 47%; }
+    .main-center img {
+      margin-right: 2%;
+      width: 21%; }
+    .main-center__top {
+      margin-bottom: 3%; }
+  .main-right {
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+    width: 15%; }
+    .main-right img {
+      width: 100%; }
+
+@media (max-width: 992px) {
+  .main {
+    padding: 15px; }
+    .main-left {
+      display: block;
+      width: 25%;
+      margin-bottom: 2.5%; }
+    .main-center {
+      width: 70%;
+      float: right;
+      margin-top: -33.4%;
+      text-align: left; }
+      .main-center img {
+        width: 30%; }
+    .main-right {
+      display: block;
+      width: 25%; } }
+@media (max-width: 576px) {
+  .main {
+    padding: 10px;
+    position: relative; }
+    .main-left {
+      width: 93%;
+      margin-bottom: 2.5%;
+      display: block;
+      position: absolute;
+      bottom: -39%; }
+    .main-center {
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin-top: 0; }
+      .main-center img {
+        width: 45%; }
+    .main-right {
+      display: block;
+      width: 100%;
+      text-align: center; } }
+
+/*# sourceMappingURL=main.css.map */
