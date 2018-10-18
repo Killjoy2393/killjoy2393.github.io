@@ -1,51 +1,31 @@
-var age = confirm('Вам уже есть 18?');
-switch (age) {
-  case true:
-  alert('Добро пожаловать в домашку Игоря!)');
-  break;
-  default:
-  alert('Насколько я знаю, моему преподователю есть 18. А если вы - не он, нефиг смотреть мою домашку!!!');
-  break
-};
+var arr = ['Lorem ipsum', 'Blanditiis, eaque', 'Iure, quis', 'Iure, voluptatum',
+'Maxime, veniam', 'Inventore, a', 'Eius, qui', 'Accusantium, amet', 'Nemo,eos', 'Vero, quos'];
 
-console.log('Любая строка!');
+alert('Необработанный массив: \n \n' + arr)
 
-var person = {
-  name: 'Igor',
-  age: 25,
-  favColor: 'green',
-  favMusic: 'Rock-n-roll',
-  sayHi: function() {
-   return('Igor say, HI!!!');
-  }
-};
+var arrWithO = arr.filter(function(elem) {
 
-console.log(person);
-console.log(person.sayHi());
+  var indx = (elem.indexOf('o'));
 
-var i;
-for (var i = 0;  i <= 20; i++) {
-  if(i % 2 === 0) {
-    console.log(i)
-  }
-};
+  if (indx !== -1) {
+    return indx
+  };
 
-var x = 10; 
-var text = x > 5 ? 'Im JS-genius' : x < 5 ? 'so im genius of JS' : 'wow take it easy!'; 
-console.log(text);
-
-var y = 0;
-while(y <= 7) {
-  console.log(y);
-  y++;
-};
-
-function apr(apr1, apr2, callback) {
-  var apr3 = Math.pow(apr1,apr2);
-  callback(apr3);
-};
-
-apr(2, 4, function(apr3){
-  console.log('Результат ' +apr3);
 });
+alert('Обработанный массив: \n \n' + arrWithO);
+console.log(arrWithO);
 
+var d = new Date();
+var year = d.getFullYear();
+var month = d.getMonth() + 1;
+var date = d.getDate();
+var hour = d.getHours();
+var min = d.getMinutes();
+
+
+ 
+alert('Формат: yyyy-mm-dd, hh:mm \n \n' + year + "-" + month + "-" + date + ', ' + hour + ':' + min);
+
+
+var date = new Date() .toLocaleString();
+alert('Формат: dd.mm.yyyy, hh:mm:ss \n \n' + date);
