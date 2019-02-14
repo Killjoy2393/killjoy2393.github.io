@@ -351,8 +351,6 @@ ul {
   .production-wrap {
     overflow: hidden;
     position: relative; }
-    .production-wrap .contact {
-      opacity: 0; }
   .production-nav {
     display: block;
     font-size: 4rem; }
@@ -380,16 +378,8 @@ ul {
     padding: 0 2rem;
     color: #ffd600;
     font-size: 7rem; }
-  .nav-menu ul {
-    display: flex;
-    color: #ffd600;
-    align-items: center; }
-    .nav-menu ul li {
-      margin-right: 2rem !important; }
-      .nav-menu ul li:last-child {
-        margin-right: 0; }
-      .nav-menu ul li a {
-        color: #ffd600; } }
+  .production .contact {
+    opacity: 0; } }
 
 @media (min-width: 1200px) {
   .nav-menu ul {
