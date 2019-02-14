@@ -271,6 +271,9 @@ ul {
       background-color: #58595b; } }
     .production-wrap.active {
       animation: bgc 0.3s forwards; }
+  .production-wrap {
+    overflow: hidden;
+    position: relative; }
   .header-mobile {
     display: flex;
     justify-content: space-between;
@@ -348,9 +351,6 @@ ul {
     display: none; }
   .logo-head {
     display: block; }
-  .production-wrap {
-    overflow: hidden;
-    position: relative; }
   .production-nav {
     display: block;
     font-size: 4rem; }
