@@ -267,7 +267,8 @@ ul {
     font-size: 3rem;
     margin-left: 3rem; }
   .production-wrap {
-    overflow: hidden; }
+    overflow: hidden;
+    max-height: 100vh; }
   @keyframes bgc {
     from {
       background-color: #fff; }
@@ -458,4 +459,6 @@ ul {
       .nav-menu ul li:last-child {
         margin-right: 0; }
       .nav-menu ul li a {
-        color: #ffd600; } }
+        color: #ffd600; }
+  .production-item {
+    padding-left: 15%; } }
