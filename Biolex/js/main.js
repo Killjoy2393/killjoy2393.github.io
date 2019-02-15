@@ -2,10 +2,13 @@ $(document).ready(function () {
 
   $(window).on('load', function () {
     var preloader = $('.preloader');
-    preloader.delay(3000).fadeOut(100);
+    preloader.delay(3000).fadeOut(500);
   });
 
   $('.header-menu__hamburger').click(function () {
+    $('.header-main').animate({
+      height: '100%'
+    }, 500);
     $('.header').animate({
       height: '100%'
     }, 500);
@@ -16,6 +19,9 @@ $(document).ready(function () {
   $('.close-head').on('click', function() {
     $('.header-menu__hamburger').removeClass('active');
     $('.header').animate({
+      height: '0'
+    }, 500);
+    $('.header-main').animate({
       height: '0'
     }, 500);
     $('.production-wrap').removeClass('active');
