@@ -277,7 +277,6 @@ ul {
     .production-wrap.active {
       animation: bgc 0.3s forwards; }
   .header {
-    display: flex;
     justify-content: space-between;
     position: fixed;
     background-color: #58595b;
@@ -292,9 +291,11 @@ ul {
     flex-direction: column;
     font-size: 1.6rem;
     max-height: 100vh;
-    height: 100vh; }
+    height: 100vh;
+    display: none; }
     .header.active {
-      animation: shHead 0.5s forwards; }
+      animation: shHead 0.5s forwards;
+      display: flex; }
   .nav-menu ul {
     display: flex;
     color: #ffd600;
@@ -349,17 +350,118 @@ ul {
   .production-item__txt {
     padding: 0 2rem;
     color: #ffffff;
-    font-size: 1.3rem; } }
+    font-size: 1.3rem; }
+  .page-wrap {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    padding: 2rem; }
+  .product-wrap {
+    overflow: visible; }
+  .contact {
+    opacity: 0; }
+  .card {
+    padding: 0;
+    margin-bottom: 3rem;
+    border: none; }
+    .card-header {
+      padding: 0;
+      background-color: transparent;
+      border: none; }
+    .card-header__img {
+      height: 100px;
+      overflow: hidden; }
+    .card-header__img img {
+      width: 100%; }
+  .mb-0 {
+    text-align: center; }
+    .mb-0 button {
+      font-size: 1.3rem;
+      color: #000;
+      text-decoration: none !important; }
+  .product-tabs {
+    display: none; }
+  .accordion {
+    width: 100%; }
+  .card-body {
+    border: 3px solid #ffd600;
+    border-top: none; }
+    .card-body button {
+      font-size: 1.3rem;
+      color: #000;
+      text-decoration: none !important;
+      display: block;
+      margin: 0.5rem auto 0 auto; }
+  .mb-0 {
+    border: 3px solid #ffd600;
+    border-top: none; }
+  .mb-0 h5:has(.collapsed) {
+    border: 2px solid #58595b; }
+  .btn-link:hover,
+  .btn-link:focus {
+    color: #000; }
+  .bg-product {
+    display: none; }
+  .card-text {
+    font-size: 1.2rem; }
+  .card-title {
+    color: #000;
+    font-size: 1.4rem;
+    font-weight: 700; }
+  .blog-item {
+    border-bottom: 15px solid #ffd600;
+    width: 90%;
+    margin: 0 10px 3rem 0; }
+  .owl-dots {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 4rem; }
+  .owl-dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.5rem;
+    padding: 0;
+    background-color: #ffd600 !important;
+    display: block !important;
+    opacity: 0.6; }
+    .owl-dot.active {
+      opacity: 1;
+      box-shadow: 0 0 50px 15px rgba(255, 214, 0, 0.3); }
+  .swiper-container-horizontal > .swiper-pagination-bullets {
+    z-index: 99999999; }
+  .swiper-pagination-bullet {
+    background-color: #ffd600 !important; }
+  .map {
+    height: 35vh; }
+  .contacts-item {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 2rem; }
+    .contacts-item i {
+      color: #ffd600;
+      margin-right: 2rem; }
+  .contacts-items {
+    margin-top: 2rem; }
+  .phone {
+    transform: rotate(90deg); } }
 
 @media (min-width: 576px) {
   .logo-wrap {
     left: -20px; }
   .header {
-    width: 100vw; } }
+    width: 100vw; }
+  .card-header__img {
+    height: 150px; }
+  .contacts-item {
+    text-align: center; } }
 
 @media (min-width: 768px) {
   .logo-wrap {
-    left: -1px; } }
+    left: -1px; }
+  .card-header__img {
+    height: 250px; }
+  .mb-0 button {
+    font-size: 1.6rem; } }
 
 @media (min-width: 992px) {
   .header-main {
@@ -376,10 +478,13 @@ ul {
     margin-bottom: 0; }
   .nav-menu-main ul {
     flex-direction: row;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    color: #000; }
     .nav-menu-main ul li {
       margin-bottom: 0;
       margin-right: 65px; }
+      .nav-menu-main ul li a {
+        color: #58595b; }
       .nav-menu-main ul li:last-child {
         margin-right: 0; }
   .close-head {
@@ -408,7 +513,7 @@ ul {
     margin-bottom: 0; }
   .nav-menu ul {
     display: flex;
-    color: #ffd600;
+    color: #58595b;
     align-items: center;
     margin-left: -5%;
     flex-direction: row; }
@@ -418,7 +523,7 @@ ul {
       .nav-menu ul li:last-child {
         margin-right: 0; }
       .nav-menu ul li a {
-        color: #ffd600; }
+        color: #58595b; }
   .production-nav {
     display: block;
     font-size: 4rem; }
@@ -447,7 +552,68 @@ ul {
     color: #ffd600;
     font-size: 7rem; }
   .production .contact {
-    opacity: 0; } }
+    opacity: 0; }
+  .products-item__img img {
+    width: 100%; }
+  .products-item__img {
+    padding-left: 0 !important; }
+  .tab-content > .active {
+    display: flex; }
+  .products-item__txt {
+    color: #ffffff;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center; }
+  .nav-link.active {
+    border-bottom: 2px solid #ffd600;
+    color: #000;
+    font-weight: 700; }
+  .nav-link {
+    font-size: 1.4rem; }
+  .products-nav {
+    padding-right: 0; }
+  .products-content {
+    padding-left: 0; }
+  .product-tabs {
+    padding-top: 5rem;
+    display: flex; }
+  .product-tabs__small {
+    display: none; }
+  .bg-product {
+    display: block; }
+  .product-wrap {
+    overflow: hidden; }
+  .blog-item {
+    display: flex;
+    flex-direction: row;
+    height: 250px !important;
+    width: 80% !important;
+    border: none;
+    border-right: 10px solid #ffd600;
+    box-shadow: 0 0 50px #ffd600;
+    margin-bottom: 10rem !important; }
+  .card-img-top {
+    width: 50% !important; }
+  .swiper-wrapper {
+    padding-left: 5% !important;
+    padding-top: 10vh;
+    height: 80vh !important; }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+  .swiper-container-vertical > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
+    top: 30%; }
+  .map {
+    height: 50vh;
+    margin-top: 15vh; }
+  .contacts-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 5%; }
+  .contacts-item {
+    text-align: left; } }
 
 @media (min-width: 1200px) {
   .nav-menu ul {
@@ -459,6 +625,21 @@ ul {
       .nav-menu ul li:last-child {
         margin-right: 0; }
       .nav-menu ul li a {
-        color: #ffd600; }
+        color: #58595b; }
   .production-item {
-    padding-left: 15%; } }
+    padding-left: 15%; }
+  .blog-item {
+    display: flex;
+    flex-direction: row;
+    height: 300px !important;
+    width: 80% !important;
+    border: none;
+    border-right: 10px solid #ffd600;
+    margin-bottom: 6rem !important; }
+  .swiper-wrapper {
+    padding-top: 5vh; }
+  .contacts-items {
+    padding-left: 10%; }
+  .map {
+    height: 70vh;
+    margin-top: 5vh; } }
