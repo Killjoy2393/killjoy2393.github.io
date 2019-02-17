@@ -358,8 +358,7 @@ ul {
     font-size: 1.3rem; }
   .page-wrap {
     position: relative;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
     padding: 2rem; }
   .product-wrap {
     overflow: visible; }
@@ -563,6 +562,9 @@ ul {
     opacity: 0; }
   .products-item__img img {
     width: 100%; }
+  .page-wrap {
+    overflow: hidden;
+    height: 100vh; }
   .products-item__img {
     padding-left: 0 !important; }
   .tab-content > .active {
