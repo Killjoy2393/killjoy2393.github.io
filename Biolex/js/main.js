@@ -31,6 +31,9 @@ $(document).ready(function () {
   function hForm() {
     $('.main-form').removeClass('active');
     $('.open').removeClass('active');
+    $('.contact-main').css({
+      display : 'block'
+    });
   }
 
   $('#production-slider').owlCarousel({
@@ -60,7 +63,6 @@ $(document).ready(function () {
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 1,
       centeredSlides: true,
-      // spaceBetween: 5,s
       freeMode: true,
       pagination: {
         el: '.swiper-pagination',

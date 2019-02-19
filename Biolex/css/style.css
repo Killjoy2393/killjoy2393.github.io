@@ -162,7 +162,8 @@ ul {
   .lang {
     font-family: GothamMedium; }
     .lang .active {
-      color: #ffd600; }
+      color: #ffd600;
+      font-weight: 600; }
   .nav-menu-main ul {
     display: flex;
     color: #ffd600;
@@ -189,7 +190,7 @@ ul {
     color: #c0c0c0; }
   .main-section {
     position: relative;
-    padding-right: 8rem;
+    padding-right: 1rem;
     padding-left: 1.5rem;
     max-height: 100vh; }
   .logo-wrap {
@@ -356,6 +357,8 @@ ul {
     padding: 0 2rem;
     color: #ffffff;
     font-size: 1.3rem; }
+  .frame {
+    display: none; }
   .page-wrap {
     position: relative;
     min-height: 100vh;
@@ -416,21 +419,10 @@ ul {
     border-bottom: 15px solid #ffd600;
     width: 90%;
     margin: 0 10px 3rem 0; }
-  .owl-dots {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 4rem; }
-  .owl-dot {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 0.5rem;
-    padding: 0;
-    background-color: #ffd600 !important;
-    display: block !important;
-    opacity: 0.6; }
-    .owl-dot.active {
-      opacity: 1;
-      box-shadow: 0 0 50px 15px rgba(255, 214, 0, 0.3); }
+  .report-body {
+    border-left: none;
+    border-bottom: none;
+    padding-top: 2rem; }
   .swiper-container-horizontal > .swiper-pagination-bullets {
     z-index: 99999999; }
   .swiper-pagination-bullet {
@@ -475,7 +467,8 @@ ul {
     flex-direction: row;
     align-items: center;
     position: static;
-    background-color: transparent; }
+    background-color: transparent;
+    z-index: 99998; }
   .header-menu__hamburger {
     display: none; }
   .nav-menu-main {
@@ -489,6 +482,9 @@ ul {
       margin-right: 65px; }
       .nav-menu-main ul li a {
         color: #58595b; }
+        .nav-menu-main ul li a:hover {
+          color: #ffd600;
+          transition: all 0.3s; }
       .nav-menu-main ul li:last-child {
         margin-right: 0; }
   .close-head {
@@ -497,8 +493,14 @@ ul {
     align-items: baseline; }
   .close {
     display: none; }
+  .main-form {
+    z-index: 99999; }
   .nav-menu {
     margin-left: -20%; }
+  .bg {
+    display: flex;
+    align-items: center;
+    padding-top: 10rem; }
   .production-wrap {
     overflow: hidden;
     max-height: 100vh; }
@@ -533,13 +535,15 @@ ul {
         color: #58595b; }
   .production-nav {
     display: block;
-    font-size: 4rem; }
+    font-size: 4rem;
+    margin-bottom: 10rem;
+    margin-right: 5rem; }
   .production-item {
     display: flex; }
     .production-item__indicators {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: 5rem;
       align-items: center; }
     .production-item__txt {
       font-size: 1.7rem; }
@@ -560,13 +564,29 @@ ul {
     font-size: 7rem; }
   .production .contact {
     opacity: 0; }
+  .production-item__indicators .current-indicators {
+    font-size: 8rem;
+    font-weight: bolder; }
+  .frame {
+    height: 80%;
+    width: 30%;
+    border: 1px solid #ffd600;
+    border-left: none;
+    display: block; }
+  .production-item__img {
+    height: 60vh; }
+    .production-item__img img {
+      height: 100%; }
   .products-item__img img {
     width: 100%; }
   .page-wrap {
     overflow: hidden;
     height: 100vh; }
   .products-item__img {
-    padding-left: 0 !important; }
+    padding-left: 0 !important;
+    height: 65vh; }
+    .products-item__img img {
+      height: 100%; }
   .tab-content > .active {
     display: flex; }
   .products-item__txt {
@@ -579,7 +599,9 @@ ul {
     color: #000;
     font-weight: 700; }
   .nav-link {
-    font-size: 1.4rem; }
+    font-size: 1.6rem;
+    padding: 3rem 1rem 1rem;
+    border-bottom: 2px solid #58595b; }
   .products-nav {
     padding-right: 0; }
   .products-content {
@@ -590,30 +612,37 @@ ul {
   .product-tabs__small {
     display: none; }
   .bg-product {
-    display: block; }
+    display: flex; }
   .product-wrap {
     overflow: hidden; }
   .blog-item {
     display: flex;
     flex-direction: row;
-    height: 250px !important;
-    width: 80% !important;
+    height: 27vh !important;
+    width: 70% !important;
     border: none;
     border-right: 10px solid #ffd600;
-    box-shadow: 0 0 50px #ffd600;
-    margin-bottom: 10rem !important; }
+    margin-bottom: 10vh !important;
+    margin-left: auto;
+    margin-right: auto; }
+    .blog-item:hover {
+      box-shadow: 0 0 50px #ffd600;
+      transition: all 0.3s;
+      cursor: pointer; }
+  .report-body {
+    padding-top: 3rem; }
   .card-img-top {
-    width: 50% !important; }
+    width: 40% !important; }
   .swiper-wrapper {
-    padding-left: 5% !important;
     padding-top: 10vh;
     height: 80vh !important; }
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; }
   .swiper-container-vertical > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
-    top: 30%; }
+    top: 45%;
+    right: 5%; }
+  .blog-wrap {
+    max-height: 100vh; }
+  .blog-frame {
+    height: 95%; }
   .map {
     height: 50vh;
     margin-top: 15vh; }
@@ -623,7 +652,9 @@ ul {
     justify-content: center;
     padding-left: 5%; }
   .contacts-item {
-    text-align: left; } }
+    text-align: left;
+    font-size: 1.4rem;
+    margin-bottom: 5rem; } }
 
 @media (min-width: 1200px) {
   .nav-menu ul {
@@ -636,20 +667,29 @@ ul {
         margin-right: 0; }
       .nav-menu ul li a {
         color: #58595b; }
-  .production-item {
-    padding-left: 15%; }
+  .frame {
+    height: 90%;
+    width: 30%;
+    border: 1px solid #ffd600;
+    border-left: none; }
+  .production-item__img {
+    height: 75vh; }
+  .products-item__img {
+    height: 70vh; }
   .blog-item {
     display: flex;
     flex-direction: row;
-    height: 300px !important;
-    width: 80% !important;
+    height: 30vh !important;
+    width: 65% !important;
     border: none;
     border-right: 10px solid #ffd600;
-    margin-bottom: 6rem !important; }
+    margin-bottom: 12vh !important;
+    margin-left: auto;
+    margin-right: auto; }
   .swiper-wrapper {
     padding-top: 5vh; }
-  .contacts-items {
-    padding-left: 10%; }
+  .card-img-top {
+    width: 35% !important; }
   .map {
     height: 70vh;
     margin-top: 5vh; } }
