@@ -1,9 +1,9 @@
-$(document).ready(function () {
+$(window).on('load', function () {
+  var preloader = $('.preloader');
+  preloader.delay(3000).fadeOut(500);
+});
 
-  $(window).on('load', function () {
-    var preloader = $('.preloader');
-    preloader.delay(3000).fadeOut(500);
-  });
+$(document).ready(function () {
 
   $('.header-menu__hamburger').click(function () {
     $('.header-main').addClass('active');

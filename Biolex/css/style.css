@@ -525,7 +525,8 @@ ul {
     color: #58595b;
     align-items: center;
     margin-left: -5%;
-    flex-direction: row; }
+    flex-direction: row;
+    margin-bottom: 0; }
     .nav-menu ul li {
       margin-right: 1rem !important;
       margin-bottom: 0; }
@@ -604,6 +605,11 @@ ul {
     font-size: 1.6rem;
     padding: 3rem 1rem 1rem;
     border-bottom: 2px solid #58595b; }
+    .nav-link:hover {
+      border-bottom: 2px solid #ffd600;
+      color: #000;
+      font-weight: 700;
+      transition: all 0.3s; }
   .products-nav {
     padding-right: 0; }
   .products-content {
