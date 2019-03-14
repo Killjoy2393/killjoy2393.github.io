@@ -279,10 +279,10 @@ button {
     position: absolute;
     top: 0;
     right: 0;
-    width: 20vw;
+    width: 35vw;
     height: 20rem;
     z-index: 2;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat; }
   .about-us {
     color: #fefefe;
@@ -685,6 +685,8 @@ button {
       display: block; }
       .header-contacts ul li a {
         color: #fefefe; }
+  .dotted {
+    top: 10rem; }
   .about-us-head {
     margin-bottom: 5rem;
     margin-top: 0;
