@@ -22,6 +22,14 @@ ul {
   margin-bottom: 0; }
 
 input,
+select {
+  opacity: 0.4; }
+  input:focus,
+  select:focus {
+    opacity: 1;
+    transition: all 0.3s; }
+
+input,
 select,
 option {
   outline: none; }
@@ -43,7 +51,24 @@ button {
   font-size: 1.5rem;
   font-weight: 500;
   cursor: pointer;
-  outline: none !important; }
+  outline: none !important;
+  position: relative;
+  overflow: hidden; }
+  button:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #A76D45;
+    transition: all 0.3s;
+    z-index: -1;
+    height: 100%;
+    bottom: -100%; }
+  button:hover:before {
+    height: 100%;
+    transition: all 0.3s;
+    bottom: 0; }
   button:focus {
     border: none; }
 
@@ -292,12 +317,15 @@ button {
       height: 45vh;
       background-image: url(../img/img1.jpg);
       background-size: cover;
-      background-position: center left; }
+      background-position: center left;
+      position: absolute;
+      left: 0; }
     .about-us-head {
       color: #A76D45;
       font-size: 1.9rem;
       font-weight: 600;
-      margin-top: 2rem; }
+      margin-top: calc(45vh + 3rem);
+      margin-bottom: 3rem; }
       .about-us-head.active {
         animation: fadeInRight 1s 0.5s forwards; }
     .about-us-txt {
@@ -514,6 +542,17 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center; }
+    .calc-item .select {
+      width: 100%;
+      position: relative; }
+      .calc-item .select i {
+        color: #A76D45;
+        position: absolute;
+        right: 1rem;
+        top: 0.8rem;
+        z-index: 2;
+        opacity: 0.4;
+        cursor: pointer; }
     .calc-item input {
       width: 100%;
       margin-bottom: 4rem;
@@ -530,14 +569,18 @@ button {
       border-bottom: 2px solid #A76D45;
       color: #757575;
       height: 3rem;
-      appearance: none; }
+      -webkit-appearance: none;
+      cursor: pointer; }
     .calc-item option {
       border: none;
       background-color: #0C0C0C; }
+      .calc-item option:focus {
+        background-color: #A76D45; }
       .calc-item option:checked {
         background-color: #A76D45;
         color: #fefefe;
-        height: 3rem; }
+        height: 3rem;
+        z-index: 999; }
       .calc-item option:hover {
         background-color: #A76D45 !important; }
   .footer {
@@ -692,7 +735,8 @@ button {
     margin-top: 0;
     font-size: 3.4rem; }
   .about-us-image {
-    height: 70vh; }
+    height: 70vh;
+    position: static; }
   .about-us-btn {
     display: none; }
   .about-us-txt {
@@ -737,7 +781,6 @@ button {
   .main-container {
     margin: 0 auto; }
   .dotted {
-    top: 10rem;
     width: 36vw;
     height: 45rem;
     background-size: cover; }
@@ -886,6 +929,9 @@ button {
     margin-bottom: 5rem; }
   .services-types .dots {
     display: none; }
+  .calc-head {
+    font-size: 3.4rem;
+    font-weight: 500; }
   .footer-copy__small {
     display: none; }
   .footer-wrap {
@@ -921,7 +967,7 @@ button {
     .blog-item:nth-of-type(even) {
       flex-direction: row-reverse; }
     .blog-item__head {
-      font-size: 2.3rem;
+      font-size: 2.7rem;
       border-bottom: none;
       position: relative;
       border-bottom: none; }
