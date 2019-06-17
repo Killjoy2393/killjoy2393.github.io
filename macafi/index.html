@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>site</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="logo">
+		<img src="img/logo.png" alt="">
+	</div>
+
+	<main class="main">
+	    <div class="main-wrap">
+	        <div class="main__twit">
+	            <img src="img/McAfee_eat_my_dick_tweet_29.11.17.png" alt="twit">
+	        </div>
+	        <div class="main__list">
+	            <ul>
+	                <li id="start-game">New Game</li>
+	                <li>Rules</li>
+	                <li>Quit Game</li>
+	            </ul>
+	        </div>
+	    </div>
+	</main>
+
+	<div id="wrap" class="no-visible" onmousedown="return false" onselectstart="return false">
+		<header class="header">
+
+			<div class="btn-baff__wrap" id="baff">
+	            <div class="btn-baff">
+	                <div class="btn-baff__inner">
+	                    R
+	                </div>
+	            </div>
+	            <div class="btn-baff__txt">
+	                2Х SPEED!
+	            </div>
+	        </div>
+		</header>
+
+		<canvas id="canvas"></canvas>
+
+		<div id="bitcoin">
+			<div class="bitcoin-content">
+				<img class="bitcoin-img" src="img/bitcoin.png" alt="bitcoin">
+				<span>20000</span>
+			</div>
+		</div>
+
+		<div class="bar-bottom"></div>
+		<div class="bar-right"></div>
+	</div>
+
+	<div class="modal-gameover">
+		<p class="restart-btn-text">You Lose</p>
+
+		<img src="img/gover.png" alt="" class="modal-gameover-img">
+		<div class="restart-btn-wrap">
+			<div class="restart-btn-left"></div>
+			<button class="restart-btn">
+				<img src="img/2-layers11.png" alt="">
+				Restart
+			</button>
+			<div class="restart-btn-right"></div>
+		</div>
+	</div>
+
+	<div class="modal-levelup">
+		<img class="modal-levelup-img" src="img/modal-speed.png" alt="">
+	</div>
+
+	<div class="modal-finish">
+		<div class="modal-finish-trophy">
+			<img src="img/trophy.png" alt="">
+		</div>
+		<p class="modal-finish-text">You win!</p>
+		<div class="restart-btn-wrap">
+			<div class="restart-btn-left"></div>
+			<button class="restart-btn">
+				<img src="img/2-layers11.png" alt="">
+				Restart
+			</button>
+			<div class="restart-btn-right"></div>
+		</div>
+	</div>
+	
+	<img class="no-visible" id="first" src="img/first.png" alt="">
+	<img class="no-visible" id="second" src="img/second.png" alt="">
+	<img class="no-visible" id="head-close" src="img/face_first.png" alt="img" >
+	<img class="no-visible" id="head-open" src="img/face_second.png" alt="img" >
+	<img class="no-visible" id="head-close-speed" src="img/face_first_speed.png" alt="img" >
+	<img class="no-visible" id="head-open-speed" src="img/face_second_speed.png" alt="img" >
+
+	<script src="script.js"></script>
+	<audio id="audio-open" src="sounds/Opening (Terminator).wav"></audio>
+	<audio id="audio-lose" src="sounds/Lose.mp3"></audio>
+	<audio id="audio-levelup" src="sounds/Speed_up.wav"></audio>
+	<audio id="audio-omnom" src="sounds/omnonom.mp3"></audio>
+	<audio id="audio-omnom-speed" src="sounds/Speed omnomnom.mp3"></audio>
+	<audio id="audio-win" src="sounds/Win.wav"></audio>
+
+</body>
+</html>
