@@ -1,23 +1,24 @@
 class Background {
-	constructor(node) { // меньше - быстрее
+	constructor(node) {
 		this.node = node
 		this.background = 'img/bg-game.png';
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
-		this.offset = 8556 / 5000;
+		this.offset = 0.47;
+		this.offset = (8556 - this.width) / 18000;
 		this.currentOffset = 0;
 
 		this.setCanvasZoom();
 		this.setBackground();
-		this.start();
 	}
 
 	start() {
 		this.stop()
 		this.timer = setInterval(() => {
 			this.currentOffset += this.offset
-			if (this.currentOffset > 8556) this.currentOffset = 0;
-
+			if (this.currentOffset > 8556 - this.width) {
+				this.stop();
+			}
 			this.node.style.backgroundPositionX = -this.currentOffset + 'px'
 		}, 10)
 	}
@@ -37,237 +38,6 @@ class Background {
 
 	setBackground() {
 		this.node.style.backgroundImage = `url(${this.background})`;
-	}
-}
-
-class Canvas {
-	constructor(canvas, modalFinish) {
-
-		this.ctx = canvas.getContext('2d');
-		this.ctxWidth = canvas.width;
-		this.ctxHeight = canvas.height;
-		this.firstImg = document.getElementById('first');
-		this.secondImg = document.getElementById('second');
-
-		this.headClose = document.getElementById('head-close');
-		this.headOpen = document.getElementById('head-open');
-		
-		this.boostTimer = null;
-
-		this.events = {};
-
-		document.body.addEventListener('click', () => {
-			this.clickHandler();
-		})
-
-		this.init();
-		this.restart(); // с включением таймера нового уровня
-	}
-
-	init() {
-		
-		this.offsetDick = 3;
-		this.currentOffsetDick = 1800; // начальное значение
-		this.offsetDickY = 7;
-		this.currentOffsetDickY = 0;
-
-		this.speedForward = 2.5;
-		this.speedBackward = 2.5;
-		this.speedHead = this.speedBackward;
-		this.currentOffsetHead = 400;
-		this.faceOpen = false;
-	}
-
-	boostEnd() {
-		
-		this.offsetDick = 3;
-		this.offsetDickY = 7;
-
-		this.headClose = document.getElementById('head-close');
-		this.headOpen = document.getElementById('head-open');
-
-		this.speedForward = 2.5;
-		this.speedBackward = 2.5;
-		this.speedHead = this.speedBackward;
-
-		//таймер повышения уровня
-		this.levelUpTimer();
-	}
-
-	emit(eventName) {
-		const event = this.events[eventName];
-		if( event ) {
-			event.forEach(fn => {
-				fn.call(null);
-			});
-		}
-	}
-	subscribe(eventName, fn) {
-		if(!this.events[eventName]) {
-			this.events[eventName] = [];
-		}
-
-		this.events[eventName].push(fn);
-
-		return () => {
-			this.events[eventName] = this.events[eventName].filter(eventFn => fn !== eventFn);
-		}
-	}
-
-	start() {
-		this.timer = setInterval(() => {
-			//проверка на окончание игры
-			if (this.currentOffsetHead + 70 < 0) {
-				this.emit('emit-gameover');
-				this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
-				this.stop();
-				this.stopFinishTimer();
-				return;
-			}
-
-			//полная очистка экрана
-			this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
-
-			//вычисление сдвига img dick
-			this.currentOffsetDick -= this.offsetDick;
-
-			if (this.currentOffsetDick > 0) {
-				this.drawFirstDick();
-			}
-
-			this.drawDick();
-
-			//ограниение движения головы дальше середины экрана
-			if (this.currentOffsetHead + this.headOpen.width / 2 > 960)
-				this.currentOffsetHead -= this.speedBackward;			//вычисление сдвига img head (только назад)
-			else
-				this.currentOffsetHead -= this.speedHead;				//вычисление сдвига img head (в обе стороны)
-
-			//очистка экрана под головой и сзади головы
-			this.ctx.clearRect(0, 0, this.currentOffsetHead + 270, this.ctxHeight);
-			this.ctx.clearRect(0, 500, this.currentOffsetHead + 300, this.ctxHeight);
-
-			//определение цвета пикселей в области рта
-			const colorTop = this.ctx.getImageData(this.currentOffsetHead + 375, 350, 1, 1).data
-			const colorBottom = this.ctx.getImageData(this.currentOffsetHead + 375, 500, 1, 1).data
-			
-			//вычисление вертикального сдвига img dick
-			if (colorTop[0] >= 0 && colorTop[1] >= 0 && colorTop[2] >= 0 && colorBottom[0] < 10 && colorBottom[1] < 10 && colorBottom[2] < 10) {
-				this.currentOffsetDickY +=this.offsetDickY
-			}
-
-			if (colorTop[0] < 10 && colorTop[1] < 10 && colorTop[2] < 10 && colorBottom[0] >= 0 && colorBottom[1] >= 0 && colorBottom[2] >= 0) {
-				this.currentOffsetDickY -=this.offsetDickY
-			}
-
-			this.drawHead();			
-		}, 10)
-
-		//открыть/закрыть
-		this.timerEat = setInterval(() => {
-			this.faceOpen = !this.faceOpen;
-		}, 200)
-	}
-
-	restart() {
-		this.start();
-		this.headClose = document.getElementById('head-close');
-		this.headOpen = document.getElementById('head-open');
-
-		this.emit('emit-startgame')
-
-		//таймер повышения уровня
-		this.levelUpTimer();
-
-		//таймер окончания
-		this.setFinishTimer();
-	}
-
-	drawDick() {
-		this.ctx.drawImage(this.secondImg, this.currentOffsetDick, this.currentOffsetDickY)
-		
-		if (this.currentOffsetDick + this.secondImg.width < this.ctxWidth) {
-			this.ctx.drawImage(this.secondImg, this.currentOffsetDick+this.secondImg.width, this.currentOffsetDickY)
-		}
-		if (this.currentOffsetDick + this.secondImg.width * 2 < this.ctxWidth) {
-			this.currentOffsetDick = this.ctxWidth - this.secondImg.width
-		}
-	}
-
-	drawFirstDick() {
-		this.ctx.drawImage(this.firstImg, this.currentOffsetDick - this.firstImg.width, this.currentOffsetDickY)
-	}
-
-	drawHead() {
-		if (this.faceOpen)
-			this.ctx.drawImage(this.headOpen, this.currentOffsetHead, 0)
-		else
-			this.ctx.drawImage(this.headClose, this.currentOffsetHead, 0)
-	}
-
-	stop() {
-		this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
-		clearInterval(this.timer);
-		clearInterval(this.timerEat);
-		clearInterval(this.gameTimer);
-		clearInterval(this.boostTimer);
-	}
-
-	stopFinishTimer() {
-		clearInterval(this.finishTimer);
-	}
-
-	levelUp() {
-		this.offsetDick = 5;
-		this.offsetDickY = 9;
-		this.speedBackward = 6;
-		this.headClose = document.getElementById('head-close-speed');
-		this.headOpen = document.getElementById('head-open-speed');
-	}
-
-	clickHandler() {
-		this.speedHead = -this.speedForward;
-		if (this.clickTimer)
-			clearInterval(this.clickTimer)
-		
-		this.clickTimer = setTimeout(()=>{
-			this.speedHead = this.speedBackward;
-		}, 400)
-	}
-
-	levelUpTimer() {
-		this.emit('emit-baff-disenable');
-		this.gameTimer = setTimeout(() => {
-			this.emit('emit-baff-enable');
-
-			document.body.addEventListener('keypress', e => {
-				if (e.code === "KeyR") {
-					this.stop();
-					this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
-					this.emit('emit-levelup-enable');
-					setTimeout(() => {
-						this.emit('emit-levelup-disenable');
-						this.init();
-						this.levelUp();
-						this.start();
-
-						this.boostTimer = setTimeout(() => {
-							this.emit('emit-boost-end');
-							this.emit('emit-baff-disenable');
-
-							this.boostEnd();
-						}, 15000)
-					}, 2000)
-				}
-			}, {once: true})
-		}, 5000)
-	}
-
-	setFinishTimer() {
-		this.finishTimer = setTimeout(() => {
-			this.emit('emit-modal-finish');
-			this.stop();
-		}, 180000) 
 	}
 }
 
@@ -333,12 +103,9 @@ class AudioList {
 
 		this.lose = new Audio(document.getElementById('audio-lose').getAttribute('src'));
 		this.levelUp = new Audio(document.getElementById('audio-levelup').getAttribute('src'));
+		this.choke = new Audio(document.getElementById('audio-choke').getAttribute('src'));
 		
 		this.omnom = new Audio(document.getElementById('audio-omnom').getAttribute('src'));
-		this.omnom.loop = true;
-		
-		this.speedOmnom = new Audio(document.getElementById('audio-omnom-speed').getAttribute('src'));
-		this.speedOmnom.loop = true;
 
 		this.win = new Audio(document.getElementById('audio-win').getAttribute('src'));
 		this.win.loop = true;		
@@ -357,13 +124,317 @@ class AudioList {
 		this.omnom.pause();
 		this.omnom.currentTime = 0;
 
-		this.speedOmnom.pause();
-		this.speedOmnom.currentTime = 0;
-
 		this.win.pause();
 		this.win.currentTime = 0;
+
+		this.choke.pause();
+		this.choke.currentTime = 0;
 	}
 }
+
+class Canvas {
+	constructor(canvas) {
+
+		this.ctx = canvas.getContext('2d');
+		this.ctxWidth = canvas.width;
+		this.ctxHeight = canvas.height;
+		this.firstImg = document.getElementById('first');
+		this.secondImg = document.getElementById('second');
+		this.smash = document.getElementById('smash');
+
+		this.headClose = document.getElementById('head-close');
+		this.headOpen = document.getElementById('head-open');
+		
+		this.boostTimer = null;
+
+		this.events = {};
+
+		document.body.addEventListener('click', () => {
+			this.clickHandler();
+		})
+
+		this.init();
+		
+		this.drawFirstDick();
+		this.drawDick();
+		this.drawHead();
+	}
+
+	init() {
+		
+		this.offsetDick = 2;
+		this.currentOffsetDick = 1650; // начальное значение
+		this.offsetDickY = 11;
+		this.currentOffsetDickY = 0;
+
+		this.speedForward = 3;
+		this.speedBackward = 2;
+		this.speedHead = this.speedBackward;
+		this.currentOffsetHead = 400;
+		this.faceOpen = false;
+		this.moveHead = false;
+
+		this.viewBaff = 0;
+		this.baffRandom = true;
+		this.choke = false;
+		this.keypressEvent = e => {
+			this.rKeyEvent(e)
+		}
+		this.pause = false;
+		this.baffActive = false;
+		this.smash.style.display = 'block';
+		this.smash.style.opacity = 0; 
+		this.timerCount = 0;
+	}
+
+	emit(eventName) {
+		const event = this.events[eventName];
+		if( event ) {
+			event.forEach(fn => {
+				fn.call(null);
+			});
+		}
+	}
+	subscribe(eventName, fn) {
+		if(!this.events[eventName]) {
+			this.events[eventName] = [];
+		}
+
+		this.events[eventName].push(fn);
+
+		return () => {
+			this.events[eventName] = this.events[eventName].filter(eventFn => fn !== eventFn);
+		}
+	}
+
+	start() {
+		this.timer = setInterval(() => {
+			if (this.pause) return;
+
+			//проверка на окончание игры
+			if (this.currentOffsetHead + 70 < 0) {
+				this.emit('emit-gameover');
+				this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
+				this.stop();
+				this.stopFinishTimer();
+				this.smash.style.display = 'none'
+				return;
+			}
+
+			//smash opacity
+			const smashWidth = this.currentOffsetHead + 70;
+			if (smashWidth < 200) {
+				this.smash.style.opacity = (200 - smashWidth) / 200; 
+			}
+
+			//полная очистка экрана
+			this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
+
+			//вычисление сдвига img dick
+			this.currentOffsetDick -= this.offsetDick;
+			this.timerCount += 10;
+
+			if (this.currentOffsetDick > 0) {
+				this.drawFirstDick();
+			}
+
+			this.drawDick();
+
+			//ограниение движения головы дальше середины экрана
+			if (this.currentOffsetHead + this.headOpen.width / 2 > 1200)
+				this.currentOffsetHead -= this.speedBackward;			//вычисление сдвига img head (только назад)
+			else
+				this.currentOffsetHead -= this.speedHead;				//вычисление сдвига img head (в обе стороны)
+
+			//изменение скорости движения (скорость растёт от 2 до 6)
+			this.offsetDick = 0.000022 * this.timerCount + 2;
+			this.speedBackward = this.offsetDick;
+
+
+			//очистка экрана под головой и сзади головы
+			this.ctx.clearRect(0, 0, this.currentOffsetHead + 270, this.ctxHeight);
+			this.ctx.clearRect(0, 500, this.currentOffsetHead + 300, this.ctxHeight);
+
+			//определение цвета пикселей в области рта
+			const colorTop = this.ctx.getImageData(this.currentOffsetHead + 375, 325, 1, 1).data
+			const colorBottom = this.ctx.getImageData(this.currentOffsetHead + 375, 525, 1, 1).data
+			
+			//вычисление вертикального сдвига img dick
+			if (colorTop[0] >= 0 && colorTop[1] >= 0 && colorTop[2] >= 0 && colorBottom[0] < 10 && colorBottom[1] < 10 && colorBottom[2] < 10) {
+				this.currentOffsetDickY +=this.offsetDickY
+			}
+
+			if (colorTop[0] < 10 && colorTop[1] < 10 && colorTop[2] < 10 && colorBottom[0] >= 0 && colorBottom[1] >= 0 && colorBottom[2] >= 0) {
+				this.currentOffsetDickY -=this.offsetDickY
+			}
+
+			this.drawHead();			
+		}, 10)
+	}
+
+	restart() {
+		this.start();
+		this.headClose = document.getElementById('head-close');
+		this.headOpen = document.getElementById('head-open');
+
+		this.emit('emit-startgame')
+
+		//таймер бафа/дебафа
+		this.changeBaff();
+
+		//таймер рандомного бафа/дебафа
+		this.timerRandomBaff();
+
+		//таймер окончания
+		this.setFinishTimer();
+	}
+
+	drawDick() {
+		this.ctx.drawImage(this.secondImg, this.currentOffsetDick, this.currentOffsetDickY)
+		
+		if (this.currentOffsetDick + this.secondImg.width < this.ctxWidth) {
+			this.ctx.drawImage(this.secondImg, this.currentOffsetDick+this.secondImg.width, this.currentOffsetDickY)
+		}
+		if (this.currentOffsetDick + this.secondImg.width * 2 < this.ctxWidth) {
+			this.currentOffsetDick = this.ctxWidth - this.secondImg.width
+		}
+	}
+
+	drawFirstDick() {
+		this.ctx.drawImage(this.firstImg, this.currentOffsetDick - this.firstImg.width, this.currentOffsetDickY)
+	}
+
+	drawHead() {
+		if (this.faceOpen)
+			this.ctx.drawImage(this.headOpen, this.currentOffsetHead, 0)
+		else
+			this.ctx.drawImage(this.headClose, this.currentOffsetHead, 0)
+	}
+
+	stop() {
+		this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
+		clearInterval(this.timer);
+		clearInterval(this.gameTimer);
+		clearInterval(this.boostTimer);
+		clearInterval(this.baffTimer);
+		clearInterval(this.chokeTimer);
+	}
+
+	stopFinishTimer() {
+		clearInterval(this.finishTimer);
+	}
+
+	clickHandler() {
+		this.eatProcess();
+		if (this.baffActive) {
+			setTimeout(() => {
+				this.eatProcess();
+				setTimeout(() => {
+					this.eatProcess();
+				}, 400)
+			}, 400)
+		}
+	}
+	eatProcess() {
+		if (!this.moveHead && !this.choke) {
+			this.emit('emit-eat')
+			this.speedHead = -this.speedForward;
+			this.moveHead = true;
+			
+			setTimeout(() => {
+				this.faceOpen = false;
+			}, 125)
+
+			setTimeout(() => {
+				this.faceOpen = true;
+			}, 275)
+
+			setTimeout(()=>{
+				this.speedHead = this.speedBackward;
+				this.moveHead = false;
+			}, 400)
+		}
+	}
+	changeBaff() {
+		this.baffTimer = setTimeout(() => {			
+			if (this.baffRandom) {
+				this.viewBaff = this.getRandomBool();
+			} else {
+				if (this.viewBaff) {
+					this.viewBaff = 0;
+				}
+				else {
+					this.viewBaff = 1;
+				}
+			}
+
+			if (this.viewBaff)
+				this.emit('emit-active-baff');
+			else
+				this.emit('emit-active-debaff');
+			
+			document.body.removeEventListener('keypress', this.keypressEvent)
+			document.body.addEventListener('keypress', this.keypressEvent)
+
+			this.changeBaff();
+		}, this.getRandomInt(3000, 5000))
+	}
+	timerRandomBaff() {
+		this.baffRandomTimer = setTimeout(() => {
+			this.baffRandom = true;
+		}, 20000)
+	}
+
+	getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min)) + min;
+	}
+	getRandomBool() {
+		return Math.floor(Math.random() * 10) >= 4  ? 1 : 0;
+	}
+	
+	rKeyEvent(e) {
+		if (e.code == 'KeyR') {
+			if (this.viewBaff) {
+				this.emit('emit-modal-levelup');
+				this.pause = true;
+				this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
+				this.baffActive = true;
+				clearInterval(this.baffTimer);
+				setTimeout(() => {
+					this.pause = false;
+					this.emit('emit-modal-levelup-disabled');
+				}, 2000)
+				setTimeout(() => {
+					this.changeBaff();
+					this.baffActive = false;
+				}, 7000)
+			} else {
+				this.choke = true;
+				this.emit('emit-choke');
+				clearInterval(this.baffTimer);
+				this.headClose = document.getElementById('head-close-speed');
+				this.headOpen = document.getElementById('head-open-speed');
+				this.chokeTimer = setTimeout(() => {
+					this.choke = false;
+					this.changeBaff();
+					this.headClose = document.getElementById('head-close');
+					this.headOpen = document.getElementById('head-open');
+				}, 2000)
+			}
+			
+			document.body.removeEventListener('keypress', this.keypressEvent)
+		}
+	}
+
+	setFinishTimer() {
+		this.finishTimer = setTimeout(() => {
+			this.emit('emit-modal-finish');
+			this.stop();
+		}, 180000) 
+	}
+}
+
+
 
 window.addEventListener('load', () => {
 	let modalGameOver = document.querySelector('.modal-gameover');
@@ -381,78 +452,90 @@ window.addEventListener('load', () => {
 
 	let startGameBtn = document.getElementById('start-game');
 
-	startGameBtn.addEventListener('click', () => {
-		document.querySelector('.main').style.display = 'none';
-		audio.stopAll();
-		audio.omnom.play();
-
+	startGameBtn.addEventListener('click', e => {
+		e.stopPropagation();
 		wrap.classList.remove('no-visible');
-
 		wrap = new Background(wrap);
-
-		bitcoin = new Bitcoin(bitcoin);
-
 		canvas = new Canvas(canvas);
 
-		canvas.subscribe('emit-gameover', () => {
-		 	modalGameOver.classList.add('active');
-		 	wrap.stop();
-		 	bitcoin.stop();
-		 	audio.stopAll();
-		 	audio.lose.play();
-		});
-
-		canvas.subscribe('emit-startgame', () => {
-			bitcoin.start();
+		document.body.addEventListener('click', () => {
+			bitcoin = new Bitcoin(bitcoin);
+			canvas.restart();
 			wrap.start();
-			audio.stopAll();
-			audio.omnom.play();
-		});
+			document.getElementById('tutorial').style.display = 'none';
 
-		canvas.subscribe('emit-baff-disenable', () => {
-			baff.classList.remove('active');
-		});
-		
-		canvas.subscribe('emit-baff-enable', () => {
-			baff.classList.add('active');
-		});
+			canvas.subscribe('emit-gameover', () => {
+			 	modalGameOver.classList.add('active');
+			 	baff.classList.remove('baff');
+			 	baff.classList.remove('debaff');
+			 	wrap.stop();
+			 	bitcoin.stop();
+			 	audio.stopAll();
+			 	audio.lose.play();
+			});
 
-		canvas.subscribe('emit-levelup-enable', () => {
-			modalLevelUp.classList.add('active');
-			audio.stopAll();
-			audio.levelUp.play();
-		});
+			canvas.subscribe('emit-startgame', () => {
+				bitcoin.start();
+				wrap.start();
+				audio.stopAll();
+			});
 
-		canvas.subscribe('emit-levelup-disenable', () => {
-			modalLevelUp.classList.remove('active');
-			audio.stopAll();
-		 	audio.speedOmnom.play();
-		});
+			canvas.subscribe('emit-eat', () => {
+				audio.stopAll();
+				audio.omnom.play();
+			});
 
-		canvas.subscribe('emit-boost-end', () => {
-			audio.stopAll();
-		 	audio.omnom.play();
-		});
+			canvas.subscribe('emit-choke', () => {
+				baff.classList.remove('baff')
+				baff.classList.remove('debaff')
+				audio.stopAll();
+				audio.choke.play();
+			});
 
-		canvas.subscribe('emit-modal-finish', () => {
-			modalFinish.classList.add('active');
-			wrap.stop();
-		 	bitcoin.stop();
-		 	audio.stopAll();
-			audio.win.play();
-		});
+			canvas.subscribe('emit-modal-levelup', () => {
+				audio.stopAll();
+				audio.levelUp.play();
+				modalLevelUp.classList.add('active')
+				baff.classList.remove('baff')
+				baff.classList.remove('debaff')
+			});
+
+			canvas.subscribe('emit-modal-levelup-disabled', () => {
+				modalLevelUp.classList.remove('active');
+			});
+			
+			canvas.subscribe('emit-active-baff', () => {
+				baff.classList.remove('debaff');
+				baff.classList.add('baff');
+			});
+
+			canvas.subscribe('emit-active-debaff', () => {
+				baff.classList.remove('baff');
+				baff.classList.add('debaff');
+			});
+
+			canvas.subscribe('emit-modal-finish', () => {
+				modalFinish.classList.add('active');
+				wrap.stop();
+			 	bitcoin.stop();
+			 	audio.stopAll();
+				audio.win.play();
+			});
 
 
-		let restartBtn = document.querySelectorAll('.restart-btn');
-		restartBtn.forEach( item => {
-			item.addEventListener('click', () => {
-				modalGameOver.classList.remove('active');
-				modalFinish.classList.remove('active');
-				canvas.init();
+			let restartBtn = document.querySelectorAll('.restart-btn');
+			restartBtn.forEach( item => {
+				item.addEventListener('click', () => {
+					modalGameOver.classList.remove('active');
+					modalFinish.classList.remove('active');
+					canvas.init();
 
-				canvas.restart();
-			})
-		});
-	})
-	
+					canvas.restart();
+				})
+			});
+		}, {once: true})
+
+		document.querySelector('.main').style.display = 'none';
+		audio.stopAll();
+	})	
 })
