@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Gillory-regular";
-	src: url('fonts/Gilroy-Regular.woff2');
+	src: url('fonts/Gilroy-Regular.ttf');
 }
 
 html, body {
@@ -48,8 +48,8 @@ body {
 
 .main__btn {
 	position: absolute;
-	bottom: 50px;
-	left: 875px;
+	top: 520px;
+	left: 60%;
 }
 
 .main__btn button {
@@ -67,10 +67,10 @@ body {
 
 .main__twit {
 	position: absolute;
-	left: 875px;
+	left: 60%;
 	top: 250px;
 	opacity: 0;
-  animation: fadeIn 2.5s 0.5s forwards;
+	animation: fadeIn 2.5s 0.5s forwards;
 }
 
 #wrap {
@@ -82,7 +82,7 @@ body {
 	left: 0;
 	width: 100%;
 	min-height: 100vh;
-	background-size: auto 100%;
+	background-size: auto 100vh;
 	background-position-x: 0%;
 	background-repeat: no-repeat;
 }
@@ -101,6 +101,11 @@ body {
   color: #ffffff;
   opacity: 0;
 }
+.btn-baff__wrap:after {
+	font-weight: 500;
+	font-size: 30px;
+	margin-left: 30px;
+}
 
 .btn-baff {
   width: 110px;
@@ -110,7 +115,6 @@ body {
   justify-content: center;
   align-items: center;
   animation: pulse 2s infinite;
-
 }
 
 .btn-baff__inner {
@@ -133,6 +137,9 @@ body {
 .btn-baff__wrap.baff {
 	opacity: 1;
 }
+.btn-baff__wrap.baff:after {
+	content: '2X SPEED!';
+}
 .btn-baff__wrap.baff  .btn-baff__inner {
   background-color: #33CB66;
 }
@@ -147,6 +154,9 @@ body {
 
 .btn-baff__wrap.debaff {
 	opacity: 1;
+}
+.btn-baff__wrap.debaff:after {
+	content: 'Choke!';
 }
 .btn-baff__wrap.debaff  .btn-baff__inner {
   background-color: #EF3F42;
@@ -274,6 +284,14 @@ body {
 	font-weight: bold;
 	text-shadow: 6px 6px 1px #33CB66;
 }
+.modal-finish-total {
+	font-size: 150px;
+	color: #fff;
+	margin: 0;
+}
+.modal-finish-total span {
+	color: #33CC66;
+}
 
 #bitcoin {
 	position: absolute;
@@ -357,15 +375,9 @@ body {
 
 #tutorial {
 	position: absolute;
-	top: 100%;
+	top: 100vh;
 	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
-@media screen and (max-width: 1367px) {
-	#tutorial {
-		transform: translate(-50%, -62%);
-	}
+	transform: translate(-50%, -25%);
 }
 
 @keyframes fadeIn {

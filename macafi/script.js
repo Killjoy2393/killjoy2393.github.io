@@ -4,19 +4,24 @@ class Background {
 		this.background = 'img/bg-game.png';
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
-		this.offset = 0.47;
-		this.offset = (8556 - this.width) / 18000;
-		this.currentOffset = 0;
+		this.bgWidth = (10237 * this.height) / 1277
+		this.offset = (this.bgWidth - this.width) / 12000;
+		
+		this.init();
 
 		this.setCanvasZoom();
 		this.setBackground();
+	}
+
+	init() {
+		this.currentOffset = 0;
 	}
 
 	start() {
 		this.stop()
 		this.timer = setInterval(() => {
 			this.currentOffset += this.offset
-			if (this.currentOffset > 8556 - this.width) {
+			if (this.currentOffset > this.bgWidth) {
 				this.stop();
 			}
 			this.node.style.backgroundPositionX = -this.currentOffset + 'px'
@@ -92,6 +97,10 @@ class Bitcoin {
 		this.offsetX = x * window.innerHeight / 40000;
 		this.node.style.top = window.innerHeight - this.offsetX + 'px';
 	}
+
+	getValue() {
+		return this.numb.innerText
+	}
 }
 
 class AudioList {
@@ -108,10 +117,36 @@ class AudioList {
 		this.omnom = new Audio(document.getElementById('audio-omnom').getAttribute('src'));
 
 		this.win = new Audio(document.getElementById('audio-win').getAttribute('src'));
-		this.win.loop = true;		
+		this.win.loop = true;
+
+		this.game = new Audio(document.getElementById('audio-game').getAttribute('src'));
+		this.game.volume = 0.1;
+		this.game.loop = true;		
 	}
 
 	stopAll() {
+		this.open.pause();
+		this.open.currentTime = 0;
+
+		this.lose.pause();
+		this.lose.currentTime = 0;
+
+		this.levelUp.pause();
+		this.levelUp.currentTime = 0;
+
+		this.omnom.pause();
+		this.omnom.currentTime = 0;
+
+		this.win.pause();
+		this.win.currentTime = 0;
+
+		this.choke.pause();
+		this.choke.currentTime = 0;
+
+		this.game.pause();
+		this.game.currentTime = 0;
+	}
+	stopInGame() {
 		this.open.pause();
 		this.open.currentTime = 0;
 
@@ -149,10 +184,6 @@ class Canvas {
 
 		this.events = {};
 
-		document.body.addEventListener('click', () => {
-			this.clickHandler();
-		})
-
 		this.init();
 		
 		this.drawFirstDick();
@@ -185,6 +216,12 @@ class Canvas {
 		this.smash.style.display = 'block';
 		this.smash.style.opacity = 0; 
 		this.timerCount = 0;
+		this.finish = false;
+
+		this.clickEvent = () => {
+			this.clickHandler();
+		}
+		document.body.addEventListener('click', this.clickEvent)	
 	}
 
 	emit(eventName) {
@@ -209,7 +246,17 @@ class Canvas {
 
 	start() {
 		this.timer = setInterval(() => {
+			//счётчик итераций
+			this.timerCount += 10;
 			if (this.pause) return;
+
+			if (this.timerCount > 120000) {
+				this.emit('emit-modal-finish');
+				this.stop();
+				this.finish = true;
+				this.smash.style.display = 'none'
+				return;
+			}
 
 			//проверка на окончание игры
 			if (this.currentOffsetHead + 70 < 0) {
@@ -232,7 +279,6 @@ class Canvas {
 
 			//вычисление сдвига img dick
 			this.currentOffsetDick -= this.offsetDick;
-			this.timerCount += 10;
 
 			if (this.currentOffsetDick > 0) {
 				this.drawFirstDick();
@@ -246,9 +292,16 @@ class Canvas {
 			else
 				this.currentOffsetHead -= this.speedHead;				//вычисление сдвига img head (в обе стороны)
 
-			//изменение скорости движения (скорость растёт от 2 до 6)
-			this.offsetDick = 0.000022 * this.timerCount + 2;
-			this.speedBackward = this.offsetDick;
+			//изменение скорости движения (скорость растёт от 2 до 9 на 50сек)
+			if (this.timerCount < 50000) {
+				this.offsetDick = 0.00014 * this.timerCount + 2;
+				this.speedBackward = this.offsetDick;
+			}
+			if (this.timerCount > 110000) {
+				this.offsetDickY = 20;
+				this.offsetDick = 0.00014 * this.timerCount / 2 + 2;
+				this.speedBackward = this.offsetDick;
+			}
 
 
 			//очистка экрана под головой и сзади головы
@@ -286,7 +339,7 @@ class Canvas {
 		this.timerRandomBaff();
 
 		//таймер окончания
-		this.setFinishTimer();
+		// this.setFinishTimer();
 	}
 
 	drawDick() {
@@ -318,6 +371,7 @@ class Canvas {
 		clearInterval(this.boostTimer);
 		clearInterval(this.baffTimer);
 		clearInterval(this.chokeTimer);
+		document.body.removeEventListener('click', this.clickEvent)	
 	}
 
 	stopFinishTimer() {
@@ -400,12 +454,15 @@ class Canvas {
 				this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
 				this.baffActive = true;
 				clearInterval(this.baffTimer);
+				document.body.removeEventListener('click', this.clickEvent)	
 				setTimeout(() => {
 					this.pause = false;
 					this.emit('emit-modal-levelup-disabled');
+					document.body.addEventListener('click', this.clickEvent)
 				}, 2000)
 				setTimeout(() => {
-					this.changeBaff();
+					if (!this.finish)
+						this.changeBaff();
 					this.baffActive = false;
 				}, 7000)
 			} else {
@@ -416,7 +473,8 @@ class Canvas {
 				this.headOpen = document.getElementById('head-open-speed');
 				this.chokeTimer = setTimeout(() => {
 					this.choke = false;
-					this.changeBaff();
+					if (!this.finish)
+						this.changeBaff();
 					this.headClose = document.getElementById('head-close');
 					this.headOpen = document.getElementById('head-open');
 				}, 2000)
@@ -424,13 +482,6 @@ class Canvas {
 			
 			document.body.removeEventListener('keypress', this.keypressEvent)
 		}
-	}
-
-	setFinishTimer() {
-		this.finishTimer = setTimeout(() => {
-			this.emit('emit-modal-finish');
-			this.stop();
-		}, 180000) 
 	}
 }
 
@@ -462,6 +513,7 @@ window.addEventListener('load', () => {
 			bitcoin = new Bitcoin(bitcoin);
 			canvas.restart();
 			wrap.start();
+			audio.game.play();
 			document.getElementById('tutorial').style.display = 'none';
 
 			canvas.subscribe('emit-gameover', () => {
@@ -478,17 +530,18 @@ window.addEventListener('load', () => {
 				bitcoin.start();
 				wrap.start();
 				audio.stopAll();
+				audio.game.play();
 			});
 
 			canvas.subscribe('emit-eat', () => {
-				audio.stopAll();
+				audio.stopInGame();
 				audio.omnom.play();
 			});
 
 			canvas.subscribe('emit-choke', () => {
 				baff.classList.remove('baff')
 				baff.classList.remove('debaff')
-				audio.stopAll();
+				audio.stopInGame();
 				audio.choke.play();
 			});
 
@@ -502,6 +555,7 @@ window.addEventListener('load', () => {
 
 			canvas.subscribe('emit-modal-levelup-disabled', () => {
 				modalLevelUp.classList.remove('active');
+				audio.game.play();
 			});
 			
 			canvas.subscribe('emit-active-baff', () => {
@@ -518,6 +572,9 @@ window.addEventListener('load', () => {
 				modalFinish.classList.add('active');
 				wrap.stop();
 			 	bitcoin.stop();
+			 	baff.classList.remove('baff');
+				baff.classList.remove('debaff');
+			 	document.getElementById('win-value').innerText = bitcoin.getValue().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
 			 	audio.stopAll();
 				audio.win.play();
 			});
@@ -525,11 +582,12 @@ window.addEventListener('load', () => {
 
 			let restartBtn = document.querySelectorAll('.restart-btn');
 			restartBtn.forEach( item => {
-				item.addEventListener('click', () => {
+				item.addEventListener('click', e => {
+					e.stopPropagation();
 					modalGameOver.classList.remove('active');
 					modalFinish.classList.remove('active');
 					canvas.init();
-
+					wrap.init();
 					canvas.restart();
 				})
 			});
