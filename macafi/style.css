@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Gillory-regular";
-	src: url('fonts/Gilroy-Regular.ttf');
+	src: url('fonts/Gilroy-Regular.woff2');
 }
 
 html, body {
@@ -55,7 +55,7 @@ body {
 .main__btn button {
 	width: 273px;
   height: 74px;
-  border-radius: 37px;
+  border-radius: 5px;
 	background-color: #33cc66;
 	color: #ffffff;
 	font-size: 25px;

@@ -39,6 +39,7 @@ class Background {
 		}
 		// const zoomY = zoomX;
 		document.getElementById('canvas').style.transform = `scale(${zoomX}, ${zoomY})`;
+		document.getElementById('speedup').style.transform = `scale(${zoomX}, ${zoomY})`;
 	}
 
 	setBackground() {
@@ -168,7 +169,7 @@ class AudioList {
 }
 
 class Canvas {
-	constructor(canvas) {
+	constructor(canvas, imgZoom) {
 
 		this.ctx = canvas.getContext('2d');
 		this.ctxWidth = canvas.width;
@@ -176,6 +177,7 @@ class Canvas {
 		this.firstImg = document.getElementById('first');
 		this.secondImg = document.getElementById('second');
 		this.smash = document.getElementById('smash');
+		this.speedUpImg = document.getElementById('speedup');
 
 		this.headClose = document.getElementById('head-close');
 		this.headOpen = document.getElementById('head-open');
@@ -294,12 +296,12 @@ class Canvas {
 
 			//изменение скорости движения (скорость растёт от 2 до 9 на 50сек)
 			if (this.timerCount < 50000) {
-				this.offsetDick = 0.00014 * this.timerCount + 2;
+				this.offsetDick = 0.0004 * this.timerCount + 3;
 				this.speedBackward = this.offsetDick;
 			}
 			if (this.timerCount > 110000) {
 				this.offsetDickY = 20;
-				this.offsetDick = 0.00014 * this.timerCount / 2 + 2;
+				this.offsetDick = 0.0004 * this.timerCount / 2 + 3;
 				this.speedBackward = this.offsetDick;
 			}
 
@@ -337,9 +339,6 @@ class Canvas {
 
 		//таймер рандомного бафа/дебафа
 		this.timerRandomBaff();
-
-		//таймер окончания
-		// this.setFinishTimer();
 	}
 
 	drawDick() {
@@ -358,10 +357,19 @@ class Canvas {
 	}
 
 	drawHead() {
-		if (this.faceOpen)
-			this.ctx.drawImage(this.headOpen, this.currentOffsetHead, 0)
-		else
-			this.ctx.drawImage(this.headClose, this.currentOffsetHead, 0)
+		if (this.baffActive) {
+			if (this.faceOpen)
+				this.speedUpImg.src = 'img/speed-open.png';
+			else
+				this.speedUpImg.src = 'img/speed-close.png';
+
+			this.speedUpImg.style.left = `${this.currentOffsetHead - 420}px`;
+		} else {
+			if (this.faceOpen)
+				this.ctx.drawImage(this.headOpen, this.currentOffsetHead, 0);
+			else
+				this.ctx.drawImage(this.headClose, this.currentOffsetHead, 0);
+		}
 	}
 
 	stop() {
@@ -431,7 +439,7 @@ class Canvas {
 			document.body.addEventListener('keypress', this.keypressEvent)
 
 			this.changeBaff();
-		}, this.getRandomInt(3000, 5000))
+		}, this.getRandomInt(500, 2500))
 	}
 	timerRandomBaff() {
 		this.baffRandomTimer = setTimeout(() => {
@@ -449,21 +457,16 @@ class Canvas {
 	rKeyEvent(e) {
 		if (e.code == 'KeyR') {
 			if (this.viewBaff) {
-				this.emit('emit-modal-levelup');
-				this.pause = true;
-				this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
+				this.emit('emit-speedup');
 				this.baffActive = true;
 				clearInterval(this.baffTimer);
-				document.body.removeEventListener('click', this.clickEvent)	
-				setTimeout(() => {
-					this.pause = false;
-					this.emit('emit-modal-levelup-disabled');
-					document.body.addEventListener('click', this.clickEvent)
-				}, 2000)
+				this.speedUpImg.style.display = 'block';
 				setTimeout(() => {
 					if (!this.finish)
 						this.changeBaff();
+					this.speedUpImg.style.display = 'none';
 					this.baffActive = false;
+					this.emit('emit-speedup-disabled');
 				}, 7000)
 			} else {
 				this.choke = true;
@@ -489,7 +492,6 @@ class Canvas {
 
 window.addEventListener('load', () => {
 	let modalGameOver = document.querySelector('.modal-gameover');
-	let modalLevelUp = document.querySelector('.modal-levelup');
 	let modalFinish = document.querySelector('.modal-finish');
 	let baff = document.getElementById('baff');
 	let wrap = document.getElementById('wrap');
@@ -545,16 +547,13 @@ window.addEventListener('load', () => {
 				audio.choke.play();
 			});
 
-			canvas.subscribe('emit-modal-levelup', () => {
-				audio.stopAll();
+			canvas.subscribe('emit-speedup', () => {
 				audio.levelUp.play();
-				modalLevelUp.classList.add('active')
 				baff.classList.remove('baff')
 				baff.classList.remove('debaff')
 			});
 
-			canvas.subscribe('emit-modal-levelup-disabled', () => {
-				modalLevelUp.classList.remove('active');
+			canvas.subscribe('emit-speedup-disabled', () => {
 				audio.game.play();
 			});
 			
