@@ -39,7 +39,6 @@ class Background {
 		}
 		// const zoomY = zoomX;
 		document.getElementById('canvas').style.transform = `scale(${zoomX}, ${zoomY})`;
-		document.getElementById('speedup').style.transform = `scale(${zoomX}, ${zoomY})`;
 	}
 
 	setBackground() {
@@ -151,25 +150,13 @@ class AudioList {
 		this.open.pause();
 		this.open.currentTime = 0;
 
-		this.lose.pause();
-		this.lose.currentTime = 0;
-
-		this.levelUp.pause();
-		this.levelUp.currentTime = 0;
-
 		this.omnom.pause();
 		this.omnom.currentTime = 0;
-
-		this.win.pause();
-		this.win.currentTime = 0;
-
-		this.choke.pause();
-		this.choke.currentTime = 0;
 	}
 }
 
 class Canvas {
-	constructor(canvas, imgZoom) {
+	constructor(canvas) {
 
 		this.ctx = canvas.getContext('2d');
 		this.ctxWidth = canvas.width;
@@ -197,7 +184,7 @@ class Canvas {
 		
 		this.offsetDick = 2;
 		this.currentOffsetDick = 1650; // начальное значение
-		this.offsetDickY = 11;
+		this.offsetDickY = 20;
 		this.currentOffsetDickY = 0;
 
 		this.speedForward = 3;
@@ -253,8 +240,8 @@ class Canvas {
 			if (this.pause) return;
 
 			if (this.timerCount > 120000) {
-				this.emit('emit-modal-finish');
 				this.stop();
+				this.emit('emit-modal-finish');
 				this.finish = true;
 				this.smash.style.display = 'none'
 				return;
@@ -296,12 +283,12 @@ class Canvas {
 
 			//изменение скорости движения (скорость растёт от 2 до 9 на 50сек)
 			if (this.timerCount < 50000) {
-				this.offsetDick = 0.0004 * this.timerCount + 3;
+				this.offsetDick = 0.0003 * this.timerCount + 2;
 				this.speedBackward = this.offsetDick;
 			}
 			if (this.timerCount > 110000) {
-				this.offsetDickY = 20;
-				this.offsetDick = 0.0004 * this.timerCount / 2 + 3;
+				this.offsetDickY = 40;
+				this.offsetDick = 0.0003 * this.timerCount / 2 + 2;
 				this.speedBackward = this.offsetDick;
 			}
 
@@ -316,11 +303,11 @@ class Canvas {
 			
 			//вычисление вертикального сдвига img dick
 			if (colorTop[0] >= 0 && colorTop[1] >= 0 && colorTop[2] >= 0 && colorBottom[0] < 10 && colorBottom[1] < 10 && colorBottom[2] < 10) {
-				this.currentOffsetDickY +=this.offsetDickY
+				this.currentOffsetDickY += this.offsetDickY
 			}
 
 			if (colorTop[0] < 10 && colorTop[1] < 10 && colorTop[2] < 10 && colorBottom[0] >= 0 && colorBottom[1] >= 0 && colorBottom[2] >= 0) {
-				this.currentOffsetDickY -=this.offsetDickY
+				this.currentOffsetDickY -= this.offsetDickY
 			}
 
 			this.drawHead();			
@@ -357,29 +344,20 @@ class Canvas {
 	}
 
 	drawHead() {
-		if (this.baffActive) {
-			if (this.faceOpen)
-				this.speedUpImg.src = 'img/speed-open.png';
-			else
-				this.speedUpImg.src = 'img/speed-close.png';
-
-			this.speedUpImg.style.left = `${this.currentOffsetHead - 420}px`;
-		} else {
-			if (this.faceOpen)
-				this.ctx.drawImage(this.headOpen, this.currentOffsetHead, 0);
-			else
-				this.ctx.drawImage(this.headClose, this.currentOffsetHead, 0);
-		}
+		if (this.faceOpen)
+			this.ctx.drawImage(this.headOpen, this.currentOffsetHead, 0);
+		else
+			this.ctx.drawImage(this.headClose, this.currentOffsetHead, 0);
 	}
 
 	stop() {
+		document.body.removeEventListener('click', this.clickEvent)	
 		this.ctx.clearRect(0, 0, this.ctxWidth, this.ctxHeight);
 		clearInterval(this.timer);
 		clearInterval(this.gameTimer);
 		clearInterval(this.boostTimer);
 		clearInterval(this.baffTimer);
 		clearInterval(this.chokeTimer);
-		document.body.removeEventListener('click', this.clickEvent)	
 	}
 
 	stopFinishTimer() {
@@ -439,7 +417,7 @@ class Canvas {
 			document.body.addEventListener('keypress', this.keypressEvent)
 
 			this.changeBaff();
-		}, this.getRandomInt(500, 2500))
+		}, this.getRandomInt(500, 1500))
 	}
 	timerRandomBaff() {
 		this.baffRandomTimer = setTimeout(() => {
@@ -459,13 +437,15 @@ class Canvas {
 			if (this.viewBaff) {
 				this.emit('emit-speedup');
 				this.baffActive = true;
+				this.headClose = document.getElementById('head-close-speed-line');
+				this.headOpen = document.getElementById('head-open-speed-line');
 				clearInterval(this.baffTimer);
-				this.speedUpImg.style.display = 'block';
 				setTimeout(() => {
 					if (!this.finish)
 						this.changeBaff();
-					this.speedUpImg.style.display = 'none';
 					this.baffActive = false;
+					this.headClose = document.getElementById('head-close');
+					this.headOpen = document.getElementById('head-open');
 					this.emit('emit-speedup-disabled');
 				}, 7000)
 			} else {
@@ -568,14 +548,14 @@ window.addEventListener('load', () => {
 			});
 
 			canvas.subscribe('emit-modal-finish', () => {
+			 	audio.stopAll();
+				audio.win.play();
 				modalFinish.classList.add('active');
 				wrap.stop();
 			 	bitcoin.stop();
 			 	baff.classList.remove('baff');
 				baff.classList.remove('debaff');
 			 	document.getElementById('win-value').innerText = bitcoin.getValue().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-			 	audio.stopAll();
-				audio.win.play();
 			});
 
 
