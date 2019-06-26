@@ -446,7 +446,6 @@ class Canvas {
 					this.baffActive = false;
 					this.headClose = document.getElementById('head-close');
 					this.headOpen = document.getElementById('head-open');
-					this.emit('emit-speedup-disabled');
 				}, 7000)
 			} else {
 				this.choke = true;
@@ -476,6 +475,7 @@ window.addEventListener('load', () => {
 	let baff = document.getElementById('baff');
 	let wrap = document.getElementById('wrap');
 	let bitcoin = document.getElementById('bitcoin');
+	let modalLevelUp = document.getElementById('modal-levelup');
 
 	let canvas = document.getElementById('canvas');
 	canvas.width = 1920;
@@ -531,10 +531,10 @@ window.addEventListener('load', () => {
 				audio.levelUp.play();
 				baff.classList.remove('baff')
 				baff.classList.remove('debaff')
-			});
-
-			canvas.subscribe('emit-speedup-disabled', () => {
-				audio.game.play();
+				modalLevelUp.classList.add('active')
+				setTimeout(() => {
+					modalLevelUp.classList.remove('active')
+				}, 1000)
 			});
 			
 			canvas.subscribe('emit-active-baff', () => {
