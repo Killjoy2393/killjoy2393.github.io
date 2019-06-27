@@ -262,6 +262,12 @@ body {
 .modal-finish.active {
 	display: flex;
 }
+.modal-finish-trophy {
+	width: 100px;
+}
+.modal-finish-trophy img {
+	width: 100%;
+}
 .modal-finish-text {
 	font-size: 70px;
 	margin: 20px 0 80px;
@@ -272,9 +278,11 @@ body {
 	font-size: 150px;
 	color: #fff;
 	margin: 0;
+	text-shadow: 6px 6px 1px #33CB66;
 }
 .modal-finish-total span {
 	color: #33CC66;
+	text-shadow: 6px 6px 1px #fff;
 }
 
 @media screen and (max-width: 1601px) {
@@ -385,6 +393,7 @@ body {
 	height: 100%;
 	z-index: 100;
 	opacity: 0;
+	pointer-events: none;
 }
 
 #tutorial {
