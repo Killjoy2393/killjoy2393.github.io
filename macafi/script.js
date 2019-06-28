@@ -5,7 +5,7 @@ class Background {
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
 		this.bgWidth = (10237 * this.height) / 1277
-		this.offset = (this.bgWidth - this.width) / 12000;
+		this.offset = (this.bgWidth - this.width) / 4500;
 		
 		this.init();
 
@@ -25,7 +25,7 @@ class Background {
 				this.stop();
 			}
 			this.node.style.backgroundPositionX = -this.currentOffset + 'px'
-		}, 10)
+		}, 20)
 	}
 	stop() {
 		clearInterval(this.timer)
@@ -105,11 +105,6 @@ class Bitcoin {
 
 class AudioList {
 	constructor() {
-
-		this.open = new Audio(document.getElementById('audio-open').getAttribute('src'));
-		this.open.loop = true;
-		this.open.play();
-
 		this.lose = new Audio(document.getElementById('audio-lose').getAttribute('src'));
 		this.levelUp = new Audio(document.getElementById('audio-levelup').getAttribute('src'));
 		this.choke = new Audio(document.getElementById('audio-choke').getAttribute('src'));
@@ -125,9 +120,6 @@ class AudioList {
 	}
 
 	stopAll() {
-		this.open.pause();
-		this.open.currentTime = 0;
-
 		this.lose.pause();
 		this.lose.currentTime = 0;
 
@@ -147,11 +139,12 @@ class AudioList {
 		this.game.currentTime = 0;
 	}
 	stopInGame() {
-		this.open.pause();
-		this.open.currentTime = 0;
-
 		this.omnom.pause();
 		this.omnom.currentTime = 0;
+	}
+	stopOpenAudio() {
+		let open = document.getElementById('audio-open');
+		document.body.removeChild(open)
 	}
 }
 
@@ -182,13 +175,13 @@ class Canvas {
 
 	init() {
 		
-		this.offsetDick = 2;
+		this.offsetDick = 4;
 		this.currentOffsetDick = 1650; // начальное значение
 		this.offsetDickY = 20;
 		this.currentOffsetDickY = 0;
 
-		this.speedForward = 3;
-		this.speedBackward = 2;
+		this.speedForward = 6;
+		this.speedBackward = 4;
 		this.speedHead = this.speedBackward;
 		this.currentOffsetHead = 400;
 		this.faceOpen = false;
@@ -239,7 +232,7 @@ class Canvas {
 			this.timerCount += 10;
 			if (this.pause) return;
 
-			if (this.timerCount > 120000) {
+			if (this.timerCount > 45000) {
 				this.stop();
 				this.emit('emit-modal-finish');
 				this.finish = true;
@@ -277,21 +270,20 @@ class Canvas {
 
 			//ограниение движения головы дальше середины экрана
 			if (this.currentOffsetHead + this.headOpen.width / 2 > 1200)
-				this.currentOffsetHead -= this.speedBackward;			//вычисление сдвига img head (только назад)
+				this.currentOffsetHead = 1200 - this.headOpen.width / 2;
 			else
 				this.currentOffsetHead -= this.speedHead;				//вычисление сдвига img head (в обе стороны)
 
 			//изменение скорости движения (скорость растёт от 2 до 9 на 50сек)
-			if (this.timerCount < 50000) {
-				this.offsetDick = 0.0003 * this.timerCount + 2;
+			if (this.timerCount < 15000) {
+				this.offsetDick = 0.0011 * this.timerCount + 4;
 				this.speedBackward = this.offsetDick;
 			}
-			if (this.timerCount > 110000) {
+			if (this.timerCount > 40000) {
 				this.offsetDickY = 40;
-				this.offsetDick = 0.0003 * this.timerCount / 2 + 2;
+				this.offsetDick = 0.00055 * this.timerCount + 4;
 				this.speedBackward = this.offsetDick;
 			}
-
 
 			//очистка экрана под головой и сзади головы
 			this.ctx.clearRect(0, 0, this.currentOffsetHead + 270, this.ctxHeight);
@@ -311,7 +303,7 @@ class Canvas {
 			}
 
 			this.drawHead();			
-		}, 10)
+		}, 20)
 	}
 
 	restart() {
@@ -487,6 +479,7 @@ window.addEventListener('load', () => {
 
 	startGameBtn.addEventListener('click', e => {
 		e.stopPropagation();
+		audio.stopOpenAudio();
 		wrap.classList.remove('no-visible');
 		wrap = new Background(wrap);
 		canvas = new Canvas(canvas);

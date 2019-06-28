@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Gillory-regular";
-	src: url('fonts/Gilroy-Regular.woff2');
+	src: url('/fonts/Gilroy-Regular.woff2');
 }
 
 html, body {
@@ -37,6 +37,7 @@ body {
 	position: absolute;
 	top: 60px;
 	left: 90px;
+	animation: fadeIn 2.5s linear;
 }
 
 .main {
@@ -47,17 +48,18 @@ body {
 }
 
 .main__btn {
+	z-index: 10;
 	position: absolute;
-	top: 60vh;
+	top: 62vh;
 	left: 60%;
 	opacity: 0;
-	animation: fadeIn 2.5s 1.5s forwards;
+	animation: fadeIn 2.5s 2.5s forwards;
 }
 
 .main__btn button {
 	width: 273px;
-  height: 74px;
-  border-radius: 12px;
+	height: 74px;
+	border-radius: 12px;
 	background-color: #33cc66;
 	color: #ffffff;
 	font-size: 25px;
@@ -68,16 +70,28 @@ body {
 }
 
 .main__twit {
+	z-index: 10;
 	position: absolute;
 	left: 60%;
 	top: 31vh;
 	width: 535px;
 	opacity: 0;
-	animation: fadeIn 2.5s 0.5s forwards;
+	animation: fadeIn 2.5s 2.5s forwards;
 }
 .main__twit img {
 	width: 100%;
 	height: auto;
+}
+.main__base {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 5;
+	background-color: #000;
+	animation: fadeIn 2.5s reverse;
+	opacity: 0;
 }
 #wrap {
 	display: flex;
@@ -401,15 +415,18 @@ body {
 	top: 100vh;
 	left: 50%;
 	transform: translate(-50%, -32%);
-	width: 660px;
-	height: 660px;
+	width: 450px;
+	height: 450px;
+}
+#tutorial img {
+	width: 100%;
 }
 #tutorial .tutorial-text {
 	position: absolute;
-	top: 22%;
+	top: 21%;
 	left: 0;
 	right: 0;
-	font-size: 30px;
+	font-size: 25px;
 	text-align: center;
 	margin: 0;
 }

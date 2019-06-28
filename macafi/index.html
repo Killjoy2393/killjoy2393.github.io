@@ -18,6 +18,7 @@
 			<div class="main__btn">
 				<button id="start-game">New Game</button>
 			</div>
+			<div class="main__base"></div>
 	    </div>
 	</main>
 
@@ -94,14 +95,15 @@
 	<img class="no-visible" id="head-open-speed-line" src="img/face_second_speed_line.png" alt="img" >
 	<img id="smash" src="img/rectangle.png" alt="img" >
 
-	<script src="script.js"></script>
-	<audio id="audio-open" src="sounds/Opening (Terminator).wav"></audio>
+	<iframe id="audio-open" hidden src="sounds/opening.wav" allow="autoplay" type="audio/mpeg"></iframe>
+
 	<audio id="audio-lose" src="sounds/Lose.mp3"></audio>
 	<audio id="audio-levelup" src="sounds/Speed_up.wav"></audio>
 	<audio id="audio-omnom" src="sounds/omnonom.mov"></audio>
 	<audio id="audio-win" src="sounds/Win.wav"></audio>
 	<audio id="audio-choke" src="sounds/Choke.wav"></audio>
 	<audio id="audio-game" src="sounds/In game (Vitas).wav"></audio>
+	<script src="script.js"></script>
 
 </body>
 </html>
