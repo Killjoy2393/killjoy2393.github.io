@@ -187,8 +187,10 @@ class Canvas {
 		this.faceOpen = false;
 		this.moveHead = false;
 
-		this.viewBaff = 0;
-		this.baffRandom = true;
+		this.viewBaff = false;
+		this.prevViewBaff = false;
+		this.countViewBaff = 0
+		this.baffRandom = false;
 		this.choke = false;
 		this.keypressEvent = e => {
 			this.rKeyEvent(e)
@@ -389,15 +391,26 @@ class Canvas {
 	}
 	changeBaff() {
 		this.baffTimer = setTimeout(() => {			
+			this.prevViewBaff = this.viewBaff
+
 			if (this.baffRandom) {
 				this.viewBaff = this.getRandomBool();
 			} else {
 				if (this.viewBaff) {
-					this.viewBaff = 0;
+					this.viewBaff = false;
 				}
 				else {
-					this.viewBaff = 1;
+					this.viewBaff = true;
 				}
+			}
+			if (this.viewBaff === this.prevViewBaff) {
+				this.countViewBaff++
+				if (this.countViewBaff > 2) {
+					this.viewBaff = !this.viewBaff
+					this.countViewBaff = 0
+				}
+			} else {
+				this.countViewBaff = 0
 			}
 
 			if (this.viewBaff)
@@ -409,7 +422,7 @@ class Canvas {
 			document.body.addEventListener('keypress', this.keypressEvent)
 
 			this.changeBaff();
-		}, this.getRandomInt(500, 1500))
+		}, this.getRandomInt(500, 1000))
 	}
 	timerRandomBaff() {
 		this.baffRandomTimer = setTimeout(() => {
@@ -421,7 +434,7 @@ class Canvas {
 		return Math.floor(Math.random() * (max - min)) + min;
 	}
 	getRandomBool() {
-		return Math.floor(Math.random() * 10) >= 4  ? 1 : 0;
+		return Math.floor(Math.random() * 10) >= 4  ? true : false;
 	}
 	
 	rKeyEvent(e) {

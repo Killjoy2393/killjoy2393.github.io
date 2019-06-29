@@ -299,15 +299,6 @@ body {
 	text-shadow: 6px 6px 1px #fff;
 }
 
-@media screen and (max-width: 1601px) {
-	.modal-finish-total {
-		font-size: 100px;
-	}
-	.modal-finish-text {
-		margin: 0 0 20px;
-	}
-}
-
 .modal-levelup {
 	position: fixed;
 	top: 0;
@@ -430,7 +421,29 @@ body {
 	text-align: center;
 	margin: 0;
 }
-
+@media screen and (max-width: 1601px) {
+	.modal-finish-total {
+		font-size: 100px;
+	}
+	.modal-finish-text {
+		margin: 0 0 20px;
+	}
+}
+@media screen and (max-height: 800px) {
+	.main__btn {
+		top: 68vh;
+	}
+}
+@media screen and (max-height: 600px) {
+	.main__btn {
+		top: 75vh;
+	}
+}
+@media screen and (max-height: 500px) {
+	.main__twit {
+		top: 18vh;
+	}
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
