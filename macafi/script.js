@@ -512,6 +512,13 @@ window.addEventListener('load', () => {
 			 	bitcoin.stop();
 			 	audio.stopAll();
 			 	audio.lose.play();
+
+			 	restartBtn.forEach( item => {
+			 		item.setAttribute('disabled', true)
+				 	setTimeout(() => {
+						item.removeAttribute('disabled')
+				 	}, 2000)
+			 	});
 			});
 
 			canvas.subscribe('emit-startgame', () => {
@@ -562,6 +569,12 @@ window.addEventListener('load', () => {
 			 	baff.classList.remove('baff');
 				baff.classList.remove('debaff');
 			 	document.getElementById('win-value').innerText = bitcoin.getValue().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+				restartBtn.forEach( item => {
+			 		item.setAttribute('disabled', true)
+				 	setTimeout(() => {
+						item.removeAttribute('disabled')
+				 	}, 2000)
+			 	});
 			});
 
 

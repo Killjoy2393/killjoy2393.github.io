@@ -1,10 +1,10 @@
 @font-face {
 	font-family: "Gillory-regular";
-	src: url('fonts/Gilroy-Regular.woff2');
+	src: url('/fonts/Gilroy-Regular.woff2');
 }
 
 html, body {
-	font-family: "Gillory-regular";
+	font-family: "Gillory-regular"; 
 }
 
 body {
@@ -229,6 +229,11 @@ body {
 	border-radius: 5px;
 	color: #33CB66;
 	font-size: 30px;
+	cursor: pointer;
+}
+.restart-btn[disabled=true] {
+	cursor: default;
+	filter: grayscale(0.75)
 }
 .restart-btn-text {
 	bottom: 32%;
