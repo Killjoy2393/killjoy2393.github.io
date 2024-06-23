@@ -187,6 +187,10 @@ body {
   .form-main .container {
     width: 80%;
   }
+
+  .form-main .btn-accent {
+    font-size: 12px;
+  }
 }
 
 
