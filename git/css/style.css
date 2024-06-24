@@ -1125,9 +1125,7 @@ p {
     grid-column: 1 / span 3;
   }
 
-  .btn-accent {
-    display: none;
-  }
+
 
   .header-title {
     margin: 0 0 43px;
